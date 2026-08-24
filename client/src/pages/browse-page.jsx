@@ -54,8 +54,9 @@ export function BrowsePage() {
       ) : (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {listings.map((listing) => (
-            <article
+            <Link
               key={listing._id}
+              to={`/listings/${listing._id}`}
               className="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm"
             >
               <div className="flex aspect-[4/3] items-center justify-center bg-stone-100">
@@ -86,7 +87,7 @@ export function BrowsePage() {
                   <span>{listing.postedBy?.name}</span>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       )}

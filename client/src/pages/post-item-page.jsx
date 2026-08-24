@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { ImagePlus, X } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { compressListingImage } from '../lib/image-compression.js';
 import { api } from '../lib/api.js';
 
 const postTypes = [
@@ -38,6 +40,14 @@ const initialValues = {
   imageUrl: ''
 };
 
+const readFileAsDataUrl = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
 export function PostItemPage() {
   const { type: routeType } = useParams();
   const navigate = useNavigate();
@@ -45,6 +55,8 @@ export function PostItemPage() {
   const defaultType = hasRouteType ? routeType : 'lost';
   const [formValues, setFormValues] = useState({ ...initialValues, type: defaultType });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!hasRouteType) {
@@ -66,6 +78,35 @@ export function PostItemPage() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleImageFile = async (file) => {
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Choose an image file.');
+      return;
+    }
+
+    try {
+      const compressedFile = await compressListingImage(file, {
+        maxSizeMB: 0.35,
+        maxWidthOrHeight: 1200
+      });
+      const imageDataUrl = await readFileAsDataUrl(compressedFile);
+      setFormValues((current) => ({ ...current, imageUrl: imageDataUrl }));
+      toast.success('Image added.');
+    } catch {
+      toast.error('Could not prepare image.');
+    }
+  };
+
+  const handleImageDrop = (event) => {
+    event.preventDefault();
+    setIsDraggingImage(false);
+    handleImageFile(event.dataTransfer.files?.[0]);
   };
 
   const handleSubmit = async (event) => {
@@ -90,7 +131,13 @@ export function PostItemPage() {
       toast.success('Item posted.');
       navigate('/browse');
     } catch (error) {
-      toast.error(error.response?.data?.message ?? 'Could not post item.');
+      const validationError = error.response?.data?.details?.[0];
+      const fieldName = validationError?.path ? `${validationError.path}: ` : '';
+      toast.error(
+        validationError?.msg
+          ? `${fieldName}${validationError.msg}`
+          : error.response?.data?.message ?? 'Could not post item.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -226,21 +273,63 @@ export function PostItemPage() {
             </label>
           ) : null}
 
-          <label className="block" htmlFor="imageUrl">
-            <span className="text-sm font-medium text-stone-800">Image URL</span>
+          <div>
+            <span className="text-sm font-medium text-stone-800">Image</span>
             <input
-              id="imageUrl"
-              name="imageUrl"
-              type="url"
-              value={formValues.imageUrl}
-              onChange={handleChange}
-              className="mt-2 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
-              placeholder="https://example.com/item-photo.jpg"
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="sr-only"
+              onChange={(event) => handleImageFile(event.target.files?.[0])}
             />
-            <span className="mt-2 block text-xs leading-5 text-stone-600">
-              Direct phone uploads are next; for now you can paste an image URL or leave this blank.
-            </span>
-          </label>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              onDragEnter={(event) => {
+                event.preventDefault();
+                setIsDraggingImage(true);
+              }}
+              onDragOver={(event) => event.preventDefault()}
+              onDragLeave={() => setIsDraggingImage(false)}
+              onDrop={handleImageDrop}
+              className={`mt-2 flex min-h-44 w-full flex-col items-center justify-center rounded-lg border border-dashed px-4 py-6 text-center transition ${
+                isDraggingImage
+                  ? 'border-campus bg-campus/5'
+                  : 'border-stone-300 bg-stone-50 hover:border-campus hover:bg-white'
+              }`}
+            >
+              {formValues.imageUrl ? (
+                <span className="relative block w-full max-w-sm overflow-hidden rounded-md border border-stone-200 bg-white">
+                  <img src={formValues.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
+                </span>
+              ) : (
+                <>
+                  <span className="flex h-11 w-11 items-center justify-center rounded-md bg-white text-campus shadow-sm">
+                    <ImagePlus size={22} aria-hidden="true" />
+                  </span>
+                  <span className="mt-3 block text-sm font-semibold text-ink">Drop an image here or tap to browse</span>
+                  <span className="mt-1 block text-xs leading-5 text-stone-600">
+                    JPEG, PNG, or WebP. The image is compressed before posting.
+                  </span>
+                </>
+              )}
+            </button>
+            {formValues.imageUrl ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setFormValues((current) => ({ ...current, imageUrl: '' }));
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                  }
+                }}
+                className="mt-2 inline-flex min-h-10 items-center gap-2 rounded-md border border-stone-300 px-3 py-2 text-sm font-semibold text-stone-700 transition hover:bg-stone-50"
+              >
+                <X size={16} />
+                Remove image
+              </button>
+            ) : null}
+          </div>
         </div>
 
         <button

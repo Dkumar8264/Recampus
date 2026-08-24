@@ -1,4 +1,5 @@
 import { matchedData, validationResult } from 'express-validator';
+import mongoose from 'mongoose';
 import { Listing } from '../models/listing-model.js';
 import { ApiError } from '../utils/api-error.js';
 
@@ -68,6 +69,24 @@ export const getListings = async (req, res, next) => {
         pages: Math.ceil(total / pageSize)
       }
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getListingById = async (req, res, next) => {
+  try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      throw new ApiError(404, 'Listing not found.');
+    }
+
+    const listing = await Listing.findById(req.params.id).populate(listingPopulate);
+
+    if (!listing) {
+      throw new ApiError(404, 'Listing not found.');
+    }
+
+    res.json({ listing });
   } catch (error) {
     next(error);
   }

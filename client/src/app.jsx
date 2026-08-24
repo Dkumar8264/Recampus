@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/protected-route.jsx';
 import { BrowsePage } from './pages/browse-page.jsx';
 import { HomePage } from './pages/home-page.jsx';
 import { LoginPage } from './pages/login-page.jsx';
+import { ListingDetailPage } from './pages/listing-detail-page.jsx';
 import { MyListingsPage } from './pages/my-listings-page.jsx';
 import { PostItemPage } from './pages/post-item-page.jsx';
 import { ProfilePage } from './pages/profile-page.jsx';
@@ -17,6 +18,7 @@ export default function App() {
       <Route element={<AppLayout />}>
         <Route index element={<HomePage />} />
         <Route path="browse" element={<BrowsePage />} />
+        <Route path="listings/:id" element={<ListingDetailPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
         <Route path="verify-email" element={<VerifyEmailPage />} />

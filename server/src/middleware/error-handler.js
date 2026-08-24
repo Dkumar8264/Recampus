@@ -8,6 +8,7 @@ export const errorHandler = (error, req, res, _next) => {
     method: req.method,
     path: req.originalUrl,
     statusCode,
+    details: error.details,
     stack: env.nodeEnv === 'production' ? undefined : error.stack
   });
 

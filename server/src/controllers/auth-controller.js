@@ -4,7 +4,7 @@ import { User } from '../models/user-model.js';
 import { sendVerificationEmail } from '../services/email-service.js';
 import { ApiError } from '../utils/api-error.js';
 import { sanitizeUser } from '../utils/sanitize-user.js';
-import { signAccessToken, signRefreshToken } from '../utils/tokens.js';
+import { signAccessToken, signRefreshToken, verifyRefreshToken } from '../utils/tokens.js';
 
 const assertValidRequest = (req) => {
   const errors = validationResult(req);
@@ -98,6 +98,24 @@ export const login = async (req, res, next) => {
 
 export const getCurrentUser = async (req, res) => {
   res.json({ user: sanitizeUser(req.user) });
+};
+
+export const refreshToken = async (req, res, next) => {
+  try {
+    assertValidRequest(req);
+
+    const { refreshToken: token } = req.body;
+    const payload = verifyRefreshToken(token);
+    const user = await User.findById(payload.sub);
+
+    if (!user || !user.emailVerified) {
+      throw new ApiError(401, 'Invalid or expired refresh token.');
+    }
+
+    res.json(buildAuthResponse(user));
+  } catch (error) {
+    next(new ApiError(401, 'Invalid or expired refresh token.'));
+  }
 };
 
 export const verifyEmail = async (req, res, next) => {

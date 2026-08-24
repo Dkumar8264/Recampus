@@ -22,3 +22,7 @@ export const verifyEmailValidator = [
 export const resendVerificationValidator = [
   body('email').trim().isEmail().withMessage('Enter a valid email address.').normalizeEmail()
 ];
+
+export const refreshTokenValidator = [
+  body('refreshToken').isString().notEmpty().withMessage('Refresh token is required.')
+];

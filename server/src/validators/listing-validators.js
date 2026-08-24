@@ -1,6 +1,9 @@
 import { body, query } from 'express-validator';
 import { campusLocations, listingCategories, listingTypes } from '../models/listing-model.js';
 
+const isImageReference = (value) =>
+  /^https?:\/\/.+/i.test(value) || /^data:image\/(jpeg|png|webp);base64,/i.test(value);
+
 export const createListingValidator = [
   body('type').isIn(listingTypes).withMessage('Choose lost, found, or sale.'),
   body('title').trim().isLength({ min: 3, max: 120 }).withMessage('Title must be 3-120 characters.'),
@@ -16,7 +19,10 @@ export const createListingValidator = [
     .withMessage('Price is required for sale listings.'),
   body('price').if(body('type').not().equals('sale')).optional({ nullable: true }).isFloat({ min: 0 }),
   body('images').optional().isArray({ max: 5 }).withMessage('Add up to 5 image URLs.'),
-  body('images.*').optional().isURL().withMessage('Each image must be a valid URL.')
+  body('images.*')
+    .optional()
+    .custom(isImageReference)
+    .withMessage('Each image must be a valid image URL or uploaded image.')
 ];
 
 export const getListingsValidator = [
