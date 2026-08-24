@@ -15,11 +15,15 @@ Phase 1 establishes the backend foundation and authentication flow:
 - MongoDB connection with Mongoose.
 - User signup and login.
 - College-domain email validation via `ALLOWED_EMAIL_DOMAIN`.
+- Email ownership verification with a 6-digit OTP before login is allowed.
 - JWT access and refresh token creation.
 - Password hashing with bcrypt.
 - Auth middleware and `/api/auth/me`.
+- Security headers, explicit CORS origins, NoSQL payload sanitization, request logging, and structured error logs.
+- Image upload policy validation for MIME type and size ahead of Cloudinary direct uploads.
 - Basic validation and centralized error handling.
 - React routes for home, browse, post item, login, signup, my listings, and profile.
+- PWA manifest/icon scaffolding, mobile touch target improvements, and community guideline pages.
 
 ## Prerequisites
 
@@ -65,13 +69,24 @@ Default URLs:
 
 See [server/.env.example](server/.env.example).
 
+Important values:
+
+- `ALLOWED_ORIGINS`: comma-separated frontend origins that may call the API.
+- `ALLOWED_EMAIL_DOMAIN`: college email domain required for signup.
+- `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`: enable OTP email delivery. If omitted in development, OTPs are logged to the server console.
+- `MAX_IMAGE_SIZE_MB`, `ALLOWED_IMAGE_MIME_TYPES`: server-side image upload policy.
+
 ## API Routes In Phase 1
 
 - `POST /api/auth/signup`
 - `POST /api/auth/login`
+- `POST /api/auth/verify-email`
+- `POST /api/auth/resend-verification`
 - `GET /api/auth/me`
+- `GET /api/uploads/image-policy`
+- `POST /api/uploads/validate-image`
 - `GET /health`
 
 ## Next Phase
 
-Phase 2 should add listing models, Cloudinary signed upload support, listing CRUD, filtering/search, and the browse/post/detail flows.
+Phase 2 should add listing models, Cloudinary signed upload signatures, listing CRUD, filtering/search, and the browse/post/detail flows. The client already includes `compressListingImage` for shrinking phone photos before upload, and the server has upload policy validation ready for the signature flow.

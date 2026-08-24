@@ -13,3 +13,12 @@ export const loginValidator = [
   body('email').trim().isEmail().withMessage('Enter a valid email address.').normalizeEmail(),
   body('password').notEmpty().withMessage('Password is required.')
 ];
+
+export const verifyEmailValidator = [
+  body('email').trim().isEmail().withMessage('Enter a valid email address.').normalizeEmail(),
+  body('otp').trim().isLength({ min: 6, max: 6 }).isNumeric().withMessage('Enter the 6-digit code.')
+];
+
+export const resendVerificationValidator = [
+  body('email').trim().isEmail().withMessage('Enter a valid email address.').normalizeEmail()
+];

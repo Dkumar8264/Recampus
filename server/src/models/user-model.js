@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'node:crypto';
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
@@ -43,6 +44,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['student', 'admin'],
       default: 'student'
+    },
+    emailVerified: {
+      type: Boolean,
+      default: false
+    },
+    emailVerificationOtpHash: {
+      type: String,
+      select: false
+    },
+    emailVerificationExpiresAt: {
+      type: Date,
+      select: false
+    },
+    emailVerificationLastSentAt: {
+      type: Date,
+      select: false
     }
   },
   { timestamps: true }
@@ -60,6 +77,31 @@ userSchema.pre('save', async function hashPassword(next) {
 
 userSchema.methods.comparePassword = function comparePassword(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.setEmailVerificationOtp = async function setEmailVerificationOtp(otp, expiresAt) {
+  this.emailVerificationOtpHash = await bcrypt.hash(otp, 12);
+  this.emailVerificationExpiresAt = expiresAt;
+  this.emailVerificationLastSentAt = new Date();
+};
+
+userSchema.methods.compareEmailVerificationOtp = function compareEmailVerificationOtp(candidateOtp) {
+  if (!this.emailVerificationOtpHash) {
+    return false;
+  }
+
+  return bcrypt.compare(candidateOtp, this.emailVerificationOtpHash);
+};
+
+userSchema.methods.markEmailVerified = function markEmailVerified() {
+  this.emailVerified = true;
+  this.emailVerificationOtpHash = undefined;
+  this.emailVerificationExpiresAt = undefined;
+  this.emailVerificationLastSentAt = undefined;
+};
+
+userSchema.statics.generateEmailVerificationOtp = function generateEmailVerificationOtp() {
+  return crypto.randomInt(100000, 999999).toString();
 };
 
 export const User = mongoose.model('User', userSchema);

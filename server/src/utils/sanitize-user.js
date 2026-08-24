@@ -6,5 +6,6 @@ export const sanitizeUser = (user) => ({
   year: user.year,
   profilePicture: user.profilePicture,
   role: user.role,
+  emailVerified: user.emailVerified,
   createdAt: user.createdAt
 });

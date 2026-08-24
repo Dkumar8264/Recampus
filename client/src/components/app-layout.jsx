@@ -38,7 +38,7 @@ export function AppLayout() {
           <div className="flex items-center gap-2">
             <Link
               to="/browse"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-100"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-100"
               aria-label="Browse listings"
               title="Browse listings"
             >
@@ -46,7 +46,7 @@ export function AppLayout() {
             </Link>
             <Link
               to="/post"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-campus text-white hover:bg-[#135a72]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-campus text-white transition hover:bg-[#135a72]"
               aria-label="Post item"
               title="Post item"
             >
@@ -55,7 +55,7 @@ export function AppLayout() {
             {isAuthenticated ? (
               <button
                 onClick={logout}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 hover:bg-stone-100"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-100"
                 aria-label="Log out"
                 title="Log out"
               >
@@ -64,7 +64,7 @@ export function AppLayout() {
             ) : (
               <Link
                 to="/login"
-                className="rounded-md border border-stone-200 px-3 py-2 text-sm font-semibold text-stone-800 hover:bg-stone-100"
+                className="inline-flex min-h-11 items-center rounded-md border border-stone-200 px-3 py-2 text-sm font-semibold text-stone-800 transition hover:bg-stone-100"
               >
                 Login
               </Link>
@@ -76,6 +76,13 @@ export function AppLayout() {
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Outlet />
       </main>
+
+      <footer className="mx-auto flex max-w-6xl flex-col gap-3 border-t border-stone-200 px-4 py-6 text-sm text-stone-600 md:flex-row md:items-center md:justify-between">
+        <p>Verified college accounts, safer campus exchanges.</p>
+        <Link to="/terms" className="font-semibold text-campus hover:text-[#135a72]">
+          Terms & community guidelines
+        </Link>
+      </footer>
     </div>
   );
 }

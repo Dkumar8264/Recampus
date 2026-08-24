@@ -25,6 +25,14 @@ export function LoginPage() {
       toast.success('Welcome back.');
       navigate(location.state?.from?.pathname ?? '/browse', { replace: true });
     } catch (error) {
+      if (error.response?.data?.code === 'EMAIL_NOT_VERIFIED') {
+        toast.error('Verify your email first.');
+        navigate('/verify-email', {
+          state: { email: error.response.data.details?.email ?? formValues.email }
+        });
+        return;
+      }
+
       toast.error(error.response?.data?.message ?? 'Login failed.');
     } finally {
       setIsSubmitting(false);
@@ -34,12 +42,28 @@ export function LoginPage() {
   return (
     <AuthFormCard title="Log in" subtitle="Use your verified college account.">
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <FormField label="College email" id="email" name="email" type="email" required onChange={handleChange} />
-        <FormField label="Password" id="password" name="password" type="password" required onChange={handleChange} />
+        <FormField
+          label="College email"
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          onChange={handleChange}
+        />
+        <FormField
+          label="Password"
+          id="password"
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          required
+          onChange={handleChange}
+        />
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-campus px-4 py-3 text-sm font-semibold text-white hover:bg-[#135a72] disabled:cursor-not-allowed disabled:opacity-70"
+          className="min-h-11 w-full rounded-md bg-campus px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#135a72] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? 'Logging in...' : 'Log in'}
         </button>

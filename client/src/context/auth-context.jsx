@@ -33,12 +33,25 @@ export function AuthProvider({ children }) {
 
   const signup = async (formValues) => {
     const response = await api.post('/auth/signup', formValues);
-    persistAuth(response.data);
+    if (response.data.accessToken) {
+      persistAuth(response.data);
+    }
+
+    return response.data;
   };
 
   const login = async (formValues) => {
     const response = await api.post('/auth/login', formValues);
     persistAuth(response.data);
+  };
+
+  const verifyEmail = async (formValues) => {
+    const response = await api.post('/auth/verify-email', formValues);
+    persistAuth(response.data);
+  };
+
+  const resendVerification = async (email) => {
+    await api.post('/auth/resend-verification', { email });
   };
 
   const logout = () => {
@@ -48,7 +61,16 @@ export function AuthProvider({ children }) {
   };
 
   const value = useMemo(
-    () => ({ user, isAuthenticated: Boolean(user), isBootstrapping, signup, login, logout }),
+    () => ({
+      user,
+      isAuthenticated: Boolean(user),
+      isBootstrapping,
+      signup,
+      login,
+      verifyEmail,
+      resendVerification,
+      logout
+    }),
     [user, isBootstrapping]
   );
 

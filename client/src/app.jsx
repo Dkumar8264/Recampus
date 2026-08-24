@@ -8,6 +8,8 @@ import { MyListingsPage } from './pages/my-listings-page.jsx';
 import { PostItemPage } from './pages/post-item-page.jsx';
 import { ProfilePage } from './pages/profile-page.jsx';
 import { SignupPage } from './pages/signup-page.jsx';
+import { TermsPage } from './pages/terms-page.jsx';
+import { VerifyEmailPage } from './pages/verify-email-page.jsx';
 
 export default function App() {
   return (
@@ -17,6 +19,8 @@ export default function App() {
         <Route path="browse" element={<BrowsePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
+        <Route path="verify-email" element={<VerifyEmailPage />} />
+        <Route path="terms" element={<TermsPage />} />
         <Route
           path="post"
           element={

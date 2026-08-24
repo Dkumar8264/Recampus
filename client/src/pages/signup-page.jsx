@@ -27,8 +27,8 @@ export function SignupPage() {
 
     try {
       await signup({ ...formValues, year: Number(formValues.year) });
-      toast.success('Account created.');
-      navigate('/browse');
+      toast.success('Check your college email for the code.');
+      navigate('/verify-email', { state: { email: formValues.email } });
     } catch (error) {
       toast.error(error.response?.data?.message ?? 'Signup failed.');
     } finally {
@@ -39,15 +39,31 @@ export function SignupPage() {
   return (
     <AuthFormCard title="Create account" subtitle="College email verification is enforced by the API.">
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <FormField label="Name" id="name" name="name" required onChange={handleChange} />
-        <FormField label="College email" id="email" name="email" type="email" required onChange={handleChange} />
-        <FormField label="Password" id="password" name="password" type="password" required onChange={handleChange} />
+        <FormField label="Name" id="name" name="name" autoComplete="name" required onChange={handleChange} />
+        <FormField
+          label="College email"
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          onChange={handleChange}
+        />
+        <FormField
+          label="Password"
+          id="password"
+          name="password"
+          type="password"
+          autoComplete="new-password"
+          required
+          onChange={handleChange}
+        />
         <FormField label="Branch" id="branch" name="branch" required onChange={handleChange} />
         <FormField label="Year" id="year" name="year" type="number" min="1" max="8" required onChange={handleChange} />
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-campus px-4 py-3 text-sm font-semibold text-white hover:bg-[#135a72] disabled:cursor-not-allowed disabled:opacity-70"
+          className="min-h-11 w-full rounded-md bg-campus px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#135a72] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? 'Creating...' : 'Create account'}
         </button>

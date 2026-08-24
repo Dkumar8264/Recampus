@@ -5,7 +5,7 @@ import { verifyAccessToken } from '../utils/tokens.js';
 export const configureSocket = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: env.clientUrl,
+      origin: env.allowedOrigins,
       credentials: true
     }
   });
