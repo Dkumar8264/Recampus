@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { env } from './config/env.js';
 import authRoutes from './routes/auth-routes.js';
+import listingRoutes from './routes/listing-routes.js';
 import uploadRoutes from './routes/upload-routes.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/not-found-handler.js';
@@ -41,6 +42,7 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/listings', listingRoutes);
 app.use('/api/uploads', uploadRoutes);
 
 app.use(notFoundHandler);

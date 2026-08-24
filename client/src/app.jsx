@@ -30,6 +30,14 @@ export default function App() {
           }
         />
         <Route
+          path="post/:type"
+          element={
+            <ProtectedRoute>
+              <PostItemPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="my-listings"
           element={
             <ProtectedRoute>
