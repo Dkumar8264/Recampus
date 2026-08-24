@@ -74,6 +74,18 @@ export const getListings = async (req, res, next) => {
   }
 };
 
+export const getMyListings = async (req, res, next) => {
+  try {
+    const listings = await Listing.find({ postedBy: req.user._id })
+      .populate(listingPopulate)
+      .sort({ createdAt: -1 });
+
+    res.json({ listings });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getListingById = async (req, res, next) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {

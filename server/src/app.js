@@ -13,6 +13,7 @@ import { logger } from './utils/logger.js';
 
 const app = express();
 
+app.disable('etag');
 app.use(helmet());
 app.use(
   cors({
@@ -39,6 +40,11 @@ app.use(
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'campus-hub-api' });
+});
+
+app.use('/api', (_req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
 });
 
 app.use('/api/auth', authRoutes);
