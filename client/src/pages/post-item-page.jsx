@@ -1,4 +1,4 @@
-import { ImagePlus, X } from 'lucide-react';
+import { CheckCircle2, CircleDollarSign, HelpCircle, ImagePlus, PackageCheck, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -6,9 +6,9 @@ import { compressListingImage } from '../lib/image-compression.js';
 import { api } from '../lib/api.js';
 
 const postTypes = [
-  { value: 'lost', label: 'Lost item' },
-  { value: 'found', label: 'Found item' },
-  { value: 'sale', label: 'Sell item' }
+  { value: 'lost', label: 'Lost item', icon: HelpCircle, helper: 'Find help from nearby students' },
+  { value: 'found', label: 'Found item', icon: PackageCheck, helper: 'Return it to the right person' },
+  { value: 'sale', label: 'Sell item', icon: CircleDollarSign, helper: 'List a campus marketplace item' }
 ];
 
 const categories = [
@@ -144,11 +144,11 @@ export function PostItemPage() {
   };
 
   return (
-    <section className="mx-auto max-w-3xl">
-      <div className="mb-6">
-        <p className="text-sm font-semibold uppercase tracking-wide text-campus">Create listing</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">{selectedTypeLabel}</h1>
-        <p className="mt-3 max-w-2xl text-stone-700">
+    <section className="mx-auto max-w-4xl">
+      <div className="mb-6 rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
+        <p className="text-sm font-bold uppercase tracking-wide text-campus">Create listing</p>
+        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">{selectedTypeLabel}</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-700 sm:text-base">
           Share enough detail for students to identify the item and arrange a safe campus handoff.
         </p>
         {hasRouteType ? (
@@ -158,36 +158,48 @@ export function PostItemPage() {
         ) : null}
       </div>
 
-      <form className="rounded-lg border border-stone-200 bg-white p-5 shadow-sm" onSubmit={handleSubmit}>
+      <form className="grid gap-5 rounded-lg border border-stone-200 bg-white p-5 shadow-sm" onSubmit={handleSubmit}>
         {!hasRouteType ? (
           <fieldset>
             <legend className="text-sm font-semibold text-stone-800">Listing type</legend>
             <div className="mt-3 grid gap-2 sm:grid-cols-3">
-              {postTypes.map((type) => (
-                <label
-                  key={type.value}
-                  className={`flex min-h-11 cursor-pointer items-center justify-center rounded-md border px-3 py-2 text-sm font-semibold transition ${
-                    formValues.type === type.value
-                      ? 'border-campus bg-campus text-white'
-                      : 'border-stone-300 text-stone-800 hover:bg-stone-50'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="type"
-                    value={type.value}
-                    checked={formValues.type === type.value}
-                    onChange={handleChange}
-                    className="sr-only"
-                  />
-                  {type.label}
-                </label>
-              ))}
+              {postTypes.map((type) => {
+                const Icon = type.icon;
+                const isSelected = formValues.type === type.value;
+
+                return (
+                  <label
+                    key={type.value}
+                    className={`flex min-h-20 cursor-pointer items-start gap-3 rounded-md border p-3 text-sm transition ${
+                      isSelected
+                        ? 'border-campus bg-teal-50 text-campus ring-2 ring-campus/15'
+                        : 'border-stone-300 text-stone-800 hover:bg-stone-50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="type"
+                      value={type.value}
+                      checked={isSelected}
+                      onChange={handleChange}
+                      className="sr-only"
+                    />
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-campus shadow-sm">
+                      <Icon size={19} aria-hidden="true" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-bold">{type.label}</span>
+                      <span className="mt-1 block text-xs leading-5 text-stone-600">{type.helper}</span>
+                    </span>
+                    {isSelected ? <CheckCircle2 size={18} className="ml-auto shrink-0" aria-hidden="true" /> : null}
+                  </label>
+                );
+              })}
             </div>
           </fieldset>
         ) : null}
 
-        <div className={`${hasRouteType ? '' : 'mt-5'} grid gap-4`}>
+        <div className="grid gap-4">
           <label className="block" htmlFor="title">
             <span className="text-sm font-medium text-stone-800">Title</span>
             <input
@@ -273,7 +285,7 @@ export function PostItemPage() {
             </label>
           ) : null}
 
-          <div>
+          <div className="rounded-lg border border-stone-200 bg-stone-50 p-4">
             <span className="text-sm font-medium text-stone-800">Image</span>
             <input
               ref={fileInputRef}
@@ -292,10 +304,10 @@ export function PostItemPage() {
               onDragOver={(event) => event.preventDefault()}
               onDragLeave={() => setIsDraggingImage(false)}
               onDrop={handleImageDrop}
-              className={`mt-2 flex min-h-44 w-full flex-col items-center justify-center rounded-lg border border-dashed px-4 py-6 text-center transition ${
+              className={`mt-2 flex min-h-52 w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed px-4 py-6 text-center transition ${
                 isDraggingImage
-                  ? 'border-campus bg-campus/5'
-                  : 'border-stone-300 bg-stone-50 hover:border-campus hover:bg-white'
+                  ? 'border-campus bg-white ring-2 ring-campus/15'
+                  : 'border-stone-300 bg-white hover:border-campus'
               }`}
             >
               {formValues.imageUrl ? (
@@ -304,7 +316,7 @@ export function PostItemPage() {
                 </span>
               ) : (
                 <>
-                  <span className="flex h-11 w-11 items-center justify-center rounded-md bg-white text-campus shadow-sm">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-md bg-teal-50 text-campus shadow-sm">
                     <ImagePlus size={22} aria-hidden="true" />
                   </span>
                   <span className="mt-3 block text-sm font-semibold text-ink">Drop an image here or tap to browse</span>

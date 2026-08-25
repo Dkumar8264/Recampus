@@ -1,12 +1,21 @@
-import { CircleDollarSign, HelpCircle, LogOut, PackageCheck, Plus, Search } from 'lucide-react';
+import {
+  CircleDollarSign,
+  HelpCircle,
+  Home,
+  LogOut,
+  PackageCheck,
+  Plus,
+  Search,
+  UserRound
+} from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/auth-context.jsx';
 
 const navLinks = [
-  { to: '/browse', label: 'Browse' },
-  { to: '/my-listings', label: 'My Listings' },
-  { to: '/profile', label: 'Profile' }
+  { to: '/browse', label: 'Browse', icon: Search },
+  { to: '/my-listings', label: 'My Listings', icon: PackageCheck },
+  { to: '/profile', label: 'Profile', icon: UserRound }
 ];
 
 const postOptions = [
@@ -58,27 +67,35 @@ export function AppLayout() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f7f8f4]">
-      <header className="border-b border-stone-200 bg-white">
+    <div className="min-h-screen bg-[#f7f8f4] bg-[radial-gradient(circle_at_top_left,rgba(23,107,135,0.08),transparent_30rem)]">
+      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="text-xl font-bold text-ink">
-            CampusHub
+          <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-xl font-extrabold tracking-tight text-ink">
+            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-campus text-white">
+              <Home size={18} aria-hidden="true" />
+            </span>
+            <span>CampusHub</span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  `rounded-md px-3 py-2 text-sm font-medium ${
-                    isActive ? 'bg-stone-100 text-campus' : 'text-stone-700 hover:bg-stone-100'
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+
+              return (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-bold transition ${
+                      isActive ? 'bg-teal-50 text-campus' : 'text-stone-700 hover:bg-stone-100'
+                    }`
+                  }
+                >
+                  <Icon size={17} aria-hidden="true" />
+                  {link.label}
+                </NavLink>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">
@@ -94,7 +111,7 @@ export function AppLayout() {
               <button
                 type="button"
                 onClick={() => setIsPostMenuOpen((current) => !current)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-campus text-white transition hover:bg-[#135a72]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-campus text-white shadow-sm transition hover:bg-[#135a72]"
                 aria-label="Open post options"
                 aria-haspopup="menu"
                 aria-expanded={isPostMenuOpen}
@@ -106,7 +123,7 @@ export function AppLayout() {
               {isPostMenuOpen ? (
                 <div
                   role="menu"
-                  className="absolute right-0 z-20 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-lg border border-stone-200 bg-white p-2 shadow-lg"
+                  className="absolute right-0 z-40 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-lg border border-stone-200 bg-white p-2 shadow-xl"
                 >
                   {postOptions.map((option) => {
                     const Icon = option.icon;
@@ -153,11 +170,41 @@ export function AppLayout() {
         </nav>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 py-6 pb-28 md:py-8 md:pb-8">
         <Outlet />
       </main>
 
-      <footer className="mx-auto flex max-w-6xl flex-col gap-3 border-t border-stone-200 px-4 py-6 text-sm text-stone-600 md:flex-row md:items-center md:justify-between">
+      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-stone-200 bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-8px_24px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
+        <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+
+            return (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-2 text-[11px] font-bold transition ${
+                    isActive ? 'bg-teal-50 text-campus' : 'text-stone-600 hover:bg-stone-100'
+                  }`
+                }
+              >
+                <Icon size={19} aria-hidden="true" />
+                <span>{link.label === 'My Listings' ? 'Mine' : link.label}</span>
+              </NavLink>
+            );
+          })}
+          <Link
+            to="/post"
+            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-md bg-campus px-2 text-[11px] font-bold text-white transition hover:bg-[#135a72]"
+          >
+            <Plus size={19} aria-hidden="true" />
+            <span>Post</span>
+          </Link>
+        </div>
+      </nav>
+
+      <footer className="mx-auto hidden max-w-6xl flex-col gap-3 border-t border-stone-200 px-4 py-6 text-sm text-stone-600 md:flex md:flex-row md:items-center md:justify-between">
         <p>Verified college accounts, safer campus exchanges.</p>
         <Link to="/terms" className="font-semibold text-campus hover:text-[#135a72]">
           Terms & community guidelines

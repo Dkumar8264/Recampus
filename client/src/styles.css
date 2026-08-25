@@ -12,6 +12,7 @@
 body {
   min-width: 320px;
   margin: 0;
+  background: #f7f8f4;
 }
 
 button,
@@ -19,6 +20,18 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+button,
+a,
+label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  cursor: pointer;
+  touch-action: manipulation;
 }
 
 :focus-visible {
