@@ -5,6 +5,7 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
+    "db:seed": "node src/scripts/seed-database.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },

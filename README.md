@@ -65,6 +65,30 @@ Default URLs:
 - Server: `http://localhost:5000`
 - Health check: `http://localhost:5000/health`
 
+## Database
+
+CampusHub uses MongoDB through Mongoose. Set `MONGO_URI` in `server/.env` to either a local MongoDB instance or a MongoDB Atlas cluster.
+
+Current collections:
+
+- `users`: verified student/admin accounts, hashed passwords, email verification state
+- `listings`: lost/found/sale posts with text and filtered-browse indexes
+- `chats`: two-person conversations tied to a listing
+- `messages`: chat messages with read state
+- `reports`: listing reports for moderation
+- `savedsearches`: saved filters for future match notifications
+
+Seed local database data and ensure indexes:
+
+```bash
+npm run db:seed --prefix server
+```
+
+The seed creates a verified demo account:
+
+- Email: `demo@<ALLOWED_EMAIL_DOMAIN>`
+- Password: `password123`
+
 ## Environment Variables
 
 See [server/.env.example](server/.env.example).
@@ -80,9 +104,14 @@ Important values:
 
 - `POST /api/auth/signup`
 - `POST /api/auth/login`
+- `POST /api/auth/refresh-token`
 - `POST /api/auth/verify-email`
 - `POST /api/auth/resend-verification`
 - `GET /api/auth/me`
+- `GET /api/listings`
+- `POST /api/listings`
+- `GET /api/listings/mine`
+- `GET /api/listings/:id`
 - `GET /api/uploads/image-policy`
 - `POST /api/uploads/validate-image`
 - `GET /health`
