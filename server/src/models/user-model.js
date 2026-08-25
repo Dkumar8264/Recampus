@@ -20,9 +20,21 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required() {
+        return this.authProvider === 'local';
+      },
       minlength: 8,
       select: false
+    },
+    authProvider: {
+      type: String,
+      enum: ['local', 'google'],
+      default: 'local'
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true
     },
     branch: {
       type: String,
@@ -71,11 +83,20 @@ userSchema.pre('save', async function hashPassword(next) {
     return;
   }
 
+  if (!this.password) {
+    next();
+    return;
+  }
+
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 userSchema.methods.comparePassword = function comparePassword(candidatePassword) {
+  if (!this.password) {
+    return false;
+  }
+
   return bcrypt.compare(candidatePassword, this.password);
 };
 

@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator';
+import { OAuth2Client } from 'google-auth-library';
 import { env } from '../config/env.js';
 import { User } from '../models/user-model.js';
 import { sendVerificationEmail } from '../services/email-service.js';
@@ -19,6 +20,8 @@ const buildAuthResponse = (user) => ({
   accessToken: signAccessToken(user._id.toString()),
   refreshToken: signRefreshToken(user._id.toString())
 });
+
+const googleClient = new OAuth2Client(env.googleClientId);
 
 const createAndSendVerificationOtp = async (user) => {
   const otp = User.generateEmailVerificationOtp();
@@ -88,6 +91,65 @@ export const login = async (req, res, next) => {
         { email: user.email },
         'EMAIL_NOT_VERIFIED'
       );
+    }
+
+    res.json(buildAuthResponse(user));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const googleLogin = async (req, res, next) => {
+  try {
+    assertValidRequest(req);
+
+    if (!env.googleClientId) {
+      throw new ApiError(503, 'Google login is not configured yet.');
+    }
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: req.body.credential,
+      audience: env.googleClientId
+    });
+    const payload = ticket.getPayload();
+
+    if (!payload?.email || !payload.email_verified || !payload.sub) {
+      throw new ApiError(401, 'Google could not verify this email.');
+    }
+
+    const normalizedEmail = payload.email.toLowerCase();
+    const hostedDomain = payload.hd?.toLowerCase();
+
+    if (!normalizedEmail.endsWith(`@${env.allowedEmailDomain}`)) {
+      throw new ApiError(400, `Please use your @${env.allowedEmailDomain} college Google account.`);
+    }
+
+    if (hostedDomain !== env.allowedEmailDomain) {
+      throw new ApiError(400, `Google login requires a verified ${env.allowedEmailDomain} Workspace account.`);
+    }
+
+    let user = await User.findOne({
+      $or: [{ googleId: payload.sub }, { email: normalizedEmail }]
+    }).select('+password');
+
+    if (!user) {
+      user = await User.create({
+        name: payload.name ?? normalizedEmail.split('@')[0],
+        email: normalizedEmail,
+        authProvider: 'google',
+        googleId: payload.sub,
+        branch: 'Not set',
+        year: 1,
+        profilePicture: payload.picture ?? '',
+        emailVerified: true
+      });
+    } else {
+      user.authProvider = user.authProvider === 'local' ? 'local' : 'google';
+      user.googleId = user.googleId ?? payload.sub;
+      user.emailVerified = true;
+      user.profilePicture = user.profilePicture || payload.picture || '';
+      user.markEmailVerified();
+      await user.save();
     }
 
     res.json(buildAuthResponse(user));

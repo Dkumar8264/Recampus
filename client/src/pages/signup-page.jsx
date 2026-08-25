@@ -3,10 +3,11 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthFormCard } from '../components/auth-form-card.jsx';
 import { FormField } from '../components/form-field.jsx';
+import { GoogleSignInButton } from '../components/google-sign-in-button.jsx';
 import { useAuth } from '../context/auth-context.jsx';
 
 export function SignupPage() {
-  const { signup } = useAuth();
+  const { googleLogin, signup } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValues, setFormValues] = useState({
@@ -36,8 +37,37 @@ export function SignupPage() {
     }
   };
 
+  const handleGoogleCredential = async (credential) => {
+    setIsSubmitting(true);
+
+    try {
+      await googleLogin(credential);
+      toast.success('Google account verified.');
+      navigate('/browse', { replace: true });
+    } catch (error) {
+      toast.error(error.response?.data?.message ?? 'Google signup failed.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <AuthFormCard title="Create account" subtitle="College email verification is enforced by the API.">
+      <div className="mb-5 flex justify-center">
+        <GoogleSignInButton
+          onCredential={handleGoogleCredential}
+          onError={() => toast.error('Google signup failed.')}
+          label="signup_with"
+          isDisabled={isSubmitting}
+        />
+      </div>
+
+      <div className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-stone-400">
+        <span className="h-px flex-1 bg-stone-200" />
+        <span>Email signup</span>
+        <span className="h-px flex-1 bg-stone-200" />
+      </div>
+
       <form className="space-y-4" onSubmit={handleSubmit}>
         <FormField label="Name" id="name" name="name" autoComplete="name" required onChange={handleChange} />
         <FormField

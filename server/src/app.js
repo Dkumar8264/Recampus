@@ -39,7 +39,7 @@ app.use(
 );
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'campus-hub-api' });
+  res.json({ status: 'ok', service: 'recampus-api' });
 });
 
 app.use('/api', (_req, res, next) => {

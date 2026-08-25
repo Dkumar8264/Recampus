@@ -2,32 +2,45 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { api } from '../lib/api.js';
 
 const AuthContext = createContext(null);
+const accessTokenKey = 'recampusAccessToken';
+const refreshTokenKey = 'recampusRefreshToken';
+const legacyAccessTokenKey = 'campusHubAccessToken';
+const legacyRefreshTokenKey = 'campusHubRefreshToken';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isBootstrapping, setIsBootstrapping] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('campusHubAccessToken');
+    const token =
+      localStorage.getItem(accessTokenKey) ?? localStorage.getItem(legacyAccessTokenKey);
 
     if (!token) {
       setIsBootstrapping(false);
       return;
     }
 
+    if (!localStorage.getItem(accessTokenKey)) {
+      localStorage.setItem(accessTokenKey, token);
+    }
+
     api
       .get('/auth/me')
       .then((response) => setUser(response.data.user))
       .catch(() => {
-        localStorage.removeItem('campusHubAccessToken');
-        localStorage.removeItem('campusHubRefreshToken');
+        localStorage.removeItem(accessTokenKey);
+        localStorage.removeItem(refreshTokenKey);
+        localStorage.removeItem(legacyAccessTokenKey);
+        localStorage.removeItem(legacyRefreshTokenKey);
       })
       .finally(() => setIsBootstrapping(false));
   }, []);
 
   const persistAuth = (authPayload) => {
-    localStorage.setItem('campusHubAccessToken', authPayload.accessToken);
-    localStorage.setItem('campusHubRefreshToken', authPayload.refreshToken);
+    localStorage.setItem(accessTokenKey, authPayload.accessToken);
+    localStorage.setItem(refreshTokenKey, authPayload.refreshToken);
+    localStorage.removeItem(legacyAccessTokenKey);
+    localStorage.removeItem(legacyRefreshTokenKey);
     setUser(authPayload.user);
   };
 
@@ -45,6 +58,11 @@ export function AuthProvider({ children }) {
     persistAuth(response.data);
   };
 
+  const googleLogin = async (credential) => {
+    const response = await api.post('/auth/google', { credential });
+    persistAuth(response.data);
+  };
+
   const verifyEmail = async (formValues) => {
     const response = await api.post('/auth/verify-email', formValues);
     persistAuth(response.data);
@@ -55,8 +73,10 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem('campusHubAccessToken');
-    localStorage.removeItem('campusHubRefreshToken');
+    localStorage.removeItem(accessTokenKey);
+    localStorage.removeItem(refreshTokenKey);
+    localStorage.removeItem(legacyAccessTokenKey);
+    localStorage.removeItem(legacyRefreshTokenKey);
     setUser(null);
   };
 
@@ -67,6 +87,7 @@ export function AuthProvider({ children }) {
       isBootstrapping,
       signup,
       login,
+      googleLogin,
       verifyEmail,
       resendVerification,
       logout

@@ -74,7 +74,7 @@ export function AppLayout() {
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-campus text-white">
               <Home size={18} aria-hidden="true" />
             </span>
-            <span>CampusHub</span>
+            <span>Recampus</span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">

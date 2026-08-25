@@ -1,6 +1,6 @@
-# CampusHub
+# Recampus
 
-CampusHub is a MERN app for college students to post lost items, found items, and peer-to-peer marketplace listings.
+Recampus is a MERN app for college students to post lost items, found items, and peer-to-peer marketplace listings.
 
 This repository is scaffolded as two apps:
 
@@ -67,7 +67,7 @@ Default URLs:
 
 ## Database
 
-CampusHub uses MongoDB through Mongoose. Set `MONGO_URI` in `server/.env` to either a local MongoDB instance or a MongoDB Atlas cluster.
+Recampus uses MongoDB through Mongoose. Set `MONGO_URI` in `server/.env` to either a local MongoDB instance or a MongoDB Atlas cluster.
 
 Current collections:
 
@@ -97,6 +97,7 @@ Important values:
 
 - `ALLOWED_ORIGINS`: comma-separated frontend origins that may call the API.
 - `ALLOWED_EMAIL_DOMAIN`: college email domain required for signup.
+- `GOOGLE_CLIENT_ID`, `VITE_GOOGLE_CLIENT_ID`: Google OAuth Web Client ID for verified Google login.
 - `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`: enable OTP email delivery. If omitted in development, OTPs are logged to the server console.
 - `MAX_IMAGE_SIZE_MB`, `ALLOWED_IMAGE_MIME_TYPES`: server-side image upload policy.
 
@@ -104,6 +105,7 @@ Important values:
 
 - `POST /api/auth/signup`
 - `POST /api/auth/login`
+- `POST /api/auth/google`
 - `POST /api/auth/refresh-token`
 - `POST /api/auth/verify-email`
 - `POST /api/auth/resend-verification`

@@ -3,7 +3,7 @@ import { ShieldCheck } from 'lucide-react';
 const guidelines = [
   'Use your own verified college account and keep listing details honest.',
   'Meet in public campus locations for exchanges and avoid sharing sensitive personal details.',
-  'Inspect items before paying. CampusHub does not process payments or guarantee transactions.',
+  'Inspect items before paying. Recampus does not process payments or guarantee transactions.',
   'Report suspicious listings, unsafe behavior, or prohibited items so admins can review them.',
   'Do not post illegal, dangerous, counterfeit, or restricted goods.'
 ];
@@ -30,7 +30,7 @@ export function TermsPage() {
       </div>
 
       <p className="mt-5 text-sm leading-6 text-stone-600">
-        CampusHub is a student coordination platform. Users are responsible for their listings,
+        Recampus is a student coordination platform. Users are responsible for their listings,
         meetings, payments, and handoffs. Admin review tools can remove reported content, but users
         should still use judgment and meet in visible campus areas.
       </p>

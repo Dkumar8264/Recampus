@@ -17,9 +17,9 @@ const transporter = hasSmtpConfig
   : null;
 
 export const sendVerificationEmail = async ({ to, otp, expiresMinutes }) => {
-  const subject = 'Verify your CampusHub email';
+  const subject = 'Verify your Recampus email';
   const text = [
-    `Your CampusHub verification code is ${otp}.`,
+    `Your Recampus verification code is ${otp}.`,
     `It expires in ${expiresMinutes} minutes.`,
     'If you did not create this account, you can ignore this email.'
   ].join('\n');

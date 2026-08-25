@@ -19,7 +19,7 @@ export function HomePage() {
           One campus board for the things students actually need.
         </h1>
         <p className="mt-4 max-w-xl text-base leading-7 text-stone-700 md:text-lg">
-          CampusHub helps students recover lost items, return found items, and sell useful stuff inside a verified
+          Recampus helps students recover lost items, return found items, and sell useful stuff inside a verified
           college community.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">

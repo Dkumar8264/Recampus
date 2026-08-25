@@ -24,7 +24,7 @@ export const env = {
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
   jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? '15m',
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '7d',
-  emailFrom: process.env.EMAIL_FROM ?? 'CampusHub <no-reply@campushub.local>',
+  emailFrom: process.env.EMAIL_FROM ?? 'Recampus <no-reply@recampus.local>',
   smtp: {
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT ?? 587),
@@ -33,6 +33,7 @@ export const env = {
     pass: process.env.SMTP_PASS
   },
   verificationOtpExpiresMinutes: Number(process.env.VERIFICATION_OTP_EXPIRES_MINUTES ?? 10),
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
   maxImageSizeMb: Number(process.env.MAX_IMAGE_SIZE_MB ?? 5),
   allowedImageMimeTypes: (process.env.ALLOWED_IMAGE_MIME_TYPES ?? 'image/jpeg,image/png,image/webp')
     .split(',')

@@ -11,7 +11,7 @@ const startServer = async () => {
   await connectDatabase();
 
   server.listen(env.port, () => {
-    console.log(`CampusHub API listening on port ${env.port}`);
+    console.log(`Recampus API listening on port ${env.port}`);
   });
 };
 

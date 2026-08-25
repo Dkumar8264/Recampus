@@ -1,6 +1,6 @@
 {
-  "name": "CampusHub",
-  "short_name": "CampusHub",
+  "name": "Recampus",
+  "short_name": "Recampus",
   "description": "A verified campus lost and found plus student marketplace.",
   "start_url": "/",
   "display": "standalone",

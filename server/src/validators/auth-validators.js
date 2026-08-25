@@ -26,3 +26,7 @@ export const resendVerificationValidator = [
 export const refreshTokenValidator = [
   body('refreshToken').isString().notEmpty().withMessage('Refresh token is required.')
 ];
+
+export const googleLoginValidator = [
+  body('credential').isString().notEmpty().withMessage('Google credential is required.')
+];
