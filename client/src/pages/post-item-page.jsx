@@ -152,7 +152,7 @@ export function PostItemPage() {
           Share enough detail for students to identify the item and arrange a safe campus handoff.
         </p>
         {hasRouteType ? (
-          <Link to="/post" className="mt-3 inline-flex text-sm font-semibold text-campus hover:text-[#135a72]">
+          <Link to="/post" className="mt-3 inline-flex text-sm font-semibold text-campus hover:text-[#0047d6]">
             Change listing type
           </Link>
         ) : null}
@@ -172,7 +172,7 @@ export function PostItemPage() {
                     key={type.value}
                     className={`flex min-h-20 cursor-pointer items-start gap-3 rounded-md border p-3 text-sm transition ${
                       isSelected
-                        ? 'border-campus bg-teal-50 text-campus ring-2 ring-campus/15'
+                        ? 'border-campus bg-blue-50 text-campus ring-2 ring-campus/15'
                         : 'border-stone-300 text-stone-800 hover:bg-stone-50'
                     }`}
                   >
@@ -316,7 +316,7 @@ export function PostItemPage() {
                 </span>
               ) : (
                 <>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-md bg-teal-50 text-campus shadow-sm">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-md bg-blue-50 text-campus shadow-sm">
                     <ImagePlus size={22} aria-hidden="true" />
                   </span>
                   <span className="mt-3 block text-sm font-semibold text-ink">Drop an image here or tap to browse</span>

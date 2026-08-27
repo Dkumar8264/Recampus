@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#17202a',
-        campus: '#176b87',
-        leaf: '#5b8c5a',
-        amber: '#d98b28'
+        ink: '#111111',
+        campus: '#0057ff',
+        leaf: '#6f3ff5',
+        amber: '#ffb000'
       }
     }
   },

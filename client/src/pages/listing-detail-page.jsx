@@ -66,7 +66,7 @@ export function ListingDetailPage() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
         <div className="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
-          <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-stone-100 via-white to-teal-50">
+          <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-stone-100 via-white to-blue-50">
             {listing.images?.[0] ? (
               <img src={listing.images[0]} alt={listing.title} className="h-full w-full object-cover" />
             ) : (
@@ -80,7 +80,7 @@ export function ListingDetailPage() {
         <div className="lg:sticky lg:top-24">
           <div className="rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-teal-50 px-2.5 py-1 text-xs font-bold text-campus ring-1 ring-teal-100">
+              <span className="rounded-md bg-blue-50 px-2.5 py-1 text-xs font-bold text-campus ring-1 ring-blue-100">
                 {typeLabels[listing.type]}
               </span>
               <span className="rounded-md bg-stone-100 px-2.5 py-1 text-xs font-bold text-stone-700">
@@ -112,12 +112,12 @@ export function ListingDetailPage() {
                   {listing.postedBy?.branch} • Year {listing.postedBy?.year}
                 </p>
               </div>
-              <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
-                <p className="inline-flex items-center gap-2 text-sm font-bold text-emerald-800">
+              <div className="rounded-md border border-blue-200 bg-blue-50 p-4">
+                <p className="inline-flex items-center gap-2 text-sm font-bold text-blue-800">
                   <ShieldCheck size={17} aria-hidden="true" />
                   Campus trust
                 </p>
-                <p className="mt-2 text-xs leading-5 text-emerald-800">
+                <p className="mt-2 text-xs leading-5 text-blue-800">
                   Verified college account. Meet in a public campus spot for handoff.
                 </p>
               </div>
@@ -133,7 +133,7 @@ export function ListingDetailPage() {
             </button>
 
             {isContactOpen ? (
-              <div className="mt-4 rounded-md border border-teal-100 bg-teal-50 p-4">
+              <div className="mt-4 rounded-md border border-blue-100 bg-blue-50 p-4">
                 <p className="inline-flex items-center gap-2 text-sm font-bold text-ink">
                   <BadgeCheck size={17} className="text-campus" aria-hidden="true" />
                   Chat preview

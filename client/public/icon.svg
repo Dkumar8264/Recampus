@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
   <title id="title">Recampus icon</title>
-  <rect width="512" height="512" rx="96" fill="#176b87"/>
+  <rect width="512" height="512" rx="96" fill="#0057FF"/>
   <path d="M112 204h288v176c0 18-14 32-32 32H144c-18 0-32-14-32-32V204Z" fill="#ffffff"/>
   <path d="M92 212 256 104l164 108H92Z" fill="#f2b84b"/>
-  <path d="M184 252h144v36H184v-36Zm0 72h96v36h-96v-36Z" fill="#176b87"/>
+  <path d="M184 252h144v36H184v-36Zm0 72h96v36h-96v-36Z" fill="#0057FF"/>
 </svg>
