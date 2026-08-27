@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { DiscoveryToolbar } from '../components/discovery-toolbar.jsx';
 import { ListingCard } from '../components/listing-card.jsx';
+import { formatLabel } from '../components/listing-card.jsx';
 import { api } from '../lib/api.js';
 
 export function BrowsePage() {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState('');
+  const [activeType, setActiveType] = useState('all');
 
   useEffect(() => {
     api
@@ -16,46 +20,58 @@ export function BrowsePage() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  const normalizedQuery = query.trim().toLowerCase();
+  const visibleListings = listings.filter((listing) => {
+    const matchesType = activeType === 'all' || listing.type === activeType;
+    const searchableText = [
+      listing.title,
+      listing.description,
+      listing.category,
+      listing.location,
+      listing.postedBy?.name
+    ]
+      .filter(Boolean)
+      .map((value) => formatLabel(value).toLowerCase())
+      .join(' ');
+
+    return matchesType && (!normalizedQuery || searchableText.includes(normalizedQuery));
+  });
+
   return (
     <section>
-      <div className="flex flex-col gap-4 rounded-lg border border-stone-200 bg-white p-5 shadow-sm sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-sm font-bold uppercase tracking-wide text-campus">Campus board</p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">Browse listings</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-700 sm:text-base">
-            Active lost, found, and marketplace posts from verified campus accounts.
-          </p>
-        </div>
-        <Link
-          to="/post"
-          className="btn-primary"
-        >
-          Post item
-        </Link>
-      </div>
+      <DiscoveryToolbar
+        activeType={activeType}
+        count={visibleListings.length}
+        onSearchChange={setQuery}
+        onTypeChange={setActiveType}
+        query={query}
+        title="Browse listings"
+      />
 
       {isLoading ? (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="h-80 animate-pulse rounded-lg border border-stone-200 bg-white shadow-sm">
-              <div className="h-44 bg-stone-100" />
-              <div className="space-y-3 p-4">
+        <div className="gallery-grid mt-7">
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <div key={item} className="h-80 animate-pulse rounded-[18px] bg-white shadow-sm">
+              <div className="h-48 rounded-[18px] bg-stone-100" />
+              <div className="space-y-3 px-1 py-4">
                 <div className="h-4 w-20 rounded bg-stone-100" />
                 <div className="h-5 w-3/4 rounded bg-stone-100" />
                 <div className="h-4 w-full rounded bg-stone-100" />
-                <div className="h-4 w-2/3 rounded bg-stone-100" />
               </div>
             </div>
           ))}
         </div>
-      ) : listings.length === 0 ? (
+      ) : visibleListings.length === 0 ? (
         <div className="mt-8 rounded-lg border border-dashed border-stone-300 bg-white p-8 text-center shadow-sm">
-          <h2 className="text-lg font-semibold text-ink">No listings yet</h2>
-          <p className="mt-2 text-sm text-stone-600">Create the first lost, found, or sale post.</p>
+          <h2 className="text-lg font-semibold text-ink">No matching listings</h2>
+          <p className="mt-2 text-sm text-stone-600">Try another search or create a fresh campus post.</p>
+          <Link to="/post" className="btn-primary mt-5">
+            Post item
+          </Link>
         </div>
       ) : (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {listings.map((listing) => (
+        <div className="gallery-grid mt-7">
+          {visibleListings.map((listing) => (
             <ListingCard key={listing._id} listing={listing} />
           ))}
         </div>

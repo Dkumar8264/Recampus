@@ -1,4 +1,13 @@
-import { CircleDollarSign, MapPin, PackageCheck, Search, UserRound } from 'lucide-react';
+import {
+  Bookmark,
+  CircleDollarSign,
+  Eye,
+  MapPin,
+  MessageCircle,
+  PackageCheck,
+  Search,
+  UserRound
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const typeConfig = {
@@ -9,7 +18,7 @@ const typeConfig = {
   },
   found: {
     label: 'Found',
-    className: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+    className: 'bg-indigo-50 text-indigo-700 ring-indigo-200',
     icon: PackageCheck
   },
   sale: {
@@ -32,9 +41,9 @@ export function ListingCard({ listing, showStatus = false }) {
   return (
     <Link
       to={`/listings/${listing._id}`}
-      className="group block overflow-hidden rounded-lg border border-stone-200 bg-white shadow-[0_8px_18px_rgba(15,23,42,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] transition duration-200 hover:-translate-y-1 hover:border-campus/40 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30 active:translate-y-0"
+      className="group block focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30"
     >
-      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-stone-100 via-white to-teal-50">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[18px] bg-gradient-to-br from-stone-100 via-white to-blue-50 shadow-[0_12px_28px_rgba(15,23,42,0.08)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_42px_rgba(15,23,42,0.16)] group-active:translate-y-0">
         {listing.images?.[0] ? (
           <img
             src={listing.images[0]}
@@ -43,47 +52,62 @@ export function ListingCard({ listing, showStatus = false }) {
             loading="lazy"
           />
         ) : (
-          <div className="flex flex-col items-center gap-2 text-stone-500">
-            <TypeIcon size={28} aria-hidden="true" />
-            <span className="text-sm font-semibold">{formatLabel(listing.category)}</span>
+          <div className="flex flex-col items-center gap-3 text-stone-500">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-campus shadow-sm">
+              <TypeIcon size={28} aria-hidden="true" />
+            </span>
+            <span className="text-sm font-black">{formatLabel(listing.category)}</span>
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-transparent to-black/42 opacity-80 transition group-hover:opacity-95" />
         <span
-          className={`absolute left-3 top-3 inline-flex min-h-8 items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-bold ring-1 ${type.className}`}
+          className={`absolute left-3 top-3 inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black ring-1 backdrop-blur ${type.className}`}
         >
           <TypeIcon size={14} aria-hidden="true" />
           {type.label}
         </span>
+        <span className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_8px_18px_rgba(15,23,42,0.16)] transition group-hover:scale-105">
+          <Bookmark size={16} aria-hidden="true" />
+        </span>
         {listing.type === 'sale' ? (
-          <span className="absolute right-3 top-3 rounded-md bg-white/95 px-2.5 py-1 text-sm font-extrabold text-ink shadow-sm">
+          <span className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1.5 text-sm font-black text-ink shadow-sm">
             ₹{listing.price}
           </span>
         ) : null}
       </div>
 
-      <div className="p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-md bg-stone-100 px-2 py-1 text-xs font-semibold text-stone-700">
-            {formatLabel(listing.category)}
-          </span>
+      <div className="px-1 pb-1 pt-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="line-clamp-1 text-base font-black leading-snug text-ink">{listing.title}</h2>
+            <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs font-bold text-stone-500">
+              <MapPin size={13} className="shrink-0" aria-hidden="true" />
+              <span className="truncate">{formatLabel(listing.location)}</span>
+            </div>
+          </div>
           {showStatus ? (
-            <span className="rounded-md bg-teal-50 px-2 py-1 text-xs font-semibold text-campus">
+            <span className="shrink-0 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-black text-campus">
               {formatLabel(listing.status)}
             </span>
           ) : null}
         </div>
 
-        <h2 className="mt-3 line-clamp-2 text-lg font-bold leading-snug text-ink">{listing.title}</h2>
-        <p className="mt-2 line-clamp-2 min-h-12 text-sm leading-6 text-stone-600">{listing.description}</p>
+        <p className="mt-2 line-clamp-2 min-h-11 text-sm leading-5 text-stone-600">{listing.description}</p>
 
-        <div className="mt-4 flex items-center justify-between gap-3 border-t border-stone-100 pt-3 text-xs font-medium text-stone-500">
-          <span className="inline-flex min-w-0 items-center gap-1.5">
-            <MapPin size={14} className="shrink-0" aria-hidden="true" />
-            <span className="truncate">{formatLabel(listing.location)}</span>
-          </span>
-          <span className="inline-flex min-w-0 items-center gap-1.5">
-            <UserRound size={14} className="shrink-0" aria-hidden="true" />
+        <div className="mt-3 flex items-center justify-between gap-3 text-xs font-bold text-stone-500">
+          <span className="inline-flex min-w-0 items-center gap-1.5 rounded-full bg-stone-100 px-2.5 py-1">
+            <UserRound size={13} className="shrink-0" aria-hidden="true" />
             <span className="truncate">{listing.postedBy?.name ?? 'Student'}</span>
+          </span>
+          <span className="inline-flex items-center gap-3">
+            <span className="inline-flex items-center gap-1">
+              <Eye size={14} aria-hidden="true" />
+              View
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <MessageCircle size={14} aria-hidden="true" />
+              Chat
+            </span>
           </span>
         </div>
       </div>

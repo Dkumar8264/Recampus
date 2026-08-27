@@ -67,9 +67,9 @@ export function AppLayout() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f7f8f4] bg-[radial-gradient(circle_at_top_left,rgba(23,107,135,0.08),transparent_30rem)]">
-      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+    <div className="min-h-screen">
+      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/90 backdrop-blur-xl">
+        <nav className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3">
           <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-xl font-extrabold tracking-tight text-ink">
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-campus text-white">
               <Home size={18} aria-hidden="true" />
@@ -77,7 +77,7 @@ export function AppLayout() {
             <span>Recampus</span>
           </Link>
 
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-1 rounded-full border border-stone-200 bg-stone-50 p-1 md:flex">
             {navLinks.map((link) => {
               const Icon = link.icon;
 
@@ -86,8 +86,8 @@ export function AppLayout() {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `nav-pill ${
-                      isActive ? 'bg-teal-50 text-campus' : 'text-stone-700 hover:bg-stone-100'
+                    `nav-pill rounded-full px-4 ${
+                      isActive ? 'bg-white text-ink shadow-sm' : 'text-stone-600 hover:bg-white hover:text-ink'
                     }`
                   }
                 >
@@ -170,7 +170,7 @@ export function AppLayout() {
         </nav>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-6 pb-28 md:py-8 md:pb-8">
+      <main className="mx-auto max-w-[1500px] px-4 py-6 pb-28 md:py-8 md:pb-8">
         <Outlet />
       </main>
 
@@ -185,7 +185,7 @@ export function AppLayout() {
                 to={link.to}
                 className={({ isActive }) =>
                   `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-2 text-[11px] font-bold transition duration-200 active:scale-[0.98] ${
-                    isActive ? 'bg-teal-50 text-campus' : 'text-stone-600 hover:bg-stone-100'
+                    isActive ? 'bg-blue-50 text-campus' : 'text-stone-600 hover:bg-stone-100'
                   }`
                 }
               >
@@ -196,7 +196,7 @@ export function AppLayout() {
           })}
           <Link
             to="/post"
-            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-md border border-[#0f5a72] bg-campus bg-gradient-to-b from-[#2180a0] via-campus to-[#115670] px-2 text-[11px] font-bold text-white shadow-[0_8px_18px_rgba(23,107,135,0.22)] transition duration-200 active:scale-[0.98]"
+            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-md border border-[#0047d6] bg-campus bg-gradient-to-b from-[#2d73ff] via-campus to-[#0041bf] px-2 text-[11px] font-bold text-white shadow-[0_8px_18px_rgba(0,87,255,0.22)] transition duration-200 active:scale-[0.98]"
           >
             <Plus size={19} aria-hidden="true" />
             <span>Post</span>
@@ -204,9 +204,9 @@ export function AppLayout() {
         </div>
       </nav>
 
-      <footer className="mx-auto hidden max-w-6xl flex-col gap-3 border-t border-stone-200 px-4 py-6 text-sm text-stone-600 md:flex md:flex-row md:items-center md:justify-between">
+      <footer className="mx-auto hidden max-w-[1500px] flex-col gap-3 border-t border-stone-200 px-4 py-6 text-sm text-stone-600 md:flex md:flex-row md:items-center md:justify-between">
         <p>Verified college accounts, safer campus exchanges.</p>
-        <Link to="/terms" className="font-semibold text-campus hover:text-[#135a72]">
+        <Link to="/terms" className="font-semibold text-campus hover:text-[#0047d6]">
           Terms & community guidelines
         </Link>
       </footer>
