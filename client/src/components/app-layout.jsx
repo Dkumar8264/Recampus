@@ -86,7 +86,7 @@ export function AppLayout() {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `inline-flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-bold transition ${
+                    `nav-pill ${
                       isActive ? 'bg-teal-50 text-campus' : 'text-stone-700 hover:bg-stone-100'
                     }`
                   }
@@ -101,7 +101,7 @@ export function AppLayout() {
           <div className="flex items-center gap-2">
             <Link
               to="/browse"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-100"
+              className="btn-icon"
               aria-label="Browse listings"
               title="Browse listings"
             >
@@ -111,7 +111,7 @@ export function AppLayout() {
               <button
                 type="button"
                 onClick={() => setIsPostMenuOpen((current) => !current)}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-campus text-white shadow-sm transition hover:bg-[#135a72]"
+                className="btn-primary h-11 w-11 px-0 py-0"
                 aria-label="Open post options"
                 aria-haspopup="menu"
                 aria-expanded={isPostMenuOpen}
@@ -152,7 +152,7 @@ export function AppLayout() {
             {isAuthenticated ? (
               <button
                 onClick={logout}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-stone-200 bg-white text-stone-700 transition hover:bg-stone-100"
+                className="btn-icon"
                 aria-label="Log out"
                 title="Log out"
               >
@@ -161,7 +161,7 @@ export function AppLayout() {
             ) : (
               <Link
                 to="/login"
-                className="inline-flex min-h-11 items-center rounded-md border border-stone-200 px-3 py-2 text-sm font-semibold text-stone-800 transition hover:bg-stone-100"
+                className="btn-secondary px-3"
               >
                 Login
               </Link>
@@ -184,7 +184,7 @@ export function AppLayout() {
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-2 text-[11px] font-bold transition ${
+                  `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-2 text-[11px] font-bold transition duration-200 active:scale-[0.98] ${
                     isActive ? 'bg-teal-50 text-campus' : 'text-stone-600 hover:bg-stone-100'
                   }`
                 }
@@ -196,7 +196,7 @@ export function AppLayout() {
           })}
           <Link
             to="/post"
-            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-md bg-campus px-2 text-[11px] font-bold text-white transition hover:bg-[#135a72]"
+            className="flex min-h-14 flex-col items-center justify-center gap-1 rounded-md border border-[#0f5a72] bg-campus bg-gradient-to-b from-[#2180a0] via-campus to-[#115670] px-2 text-[11px] font-bold text-white shadow-[0_8px_18px_rgba(23,107,135,0.22)] transition duration-200 active:scale-[0.98]"
           >
             <Plus size={19} aria-hidden="true" />
             <span>Post</span>

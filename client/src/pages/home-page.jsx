@@ -25,14 +25,14 @@ export function HomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             to="/browse"
-            className="inline-flex min-h-12 items-center gap-2 rounded-md bg-campus px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#135a72]"
+            className="btn-primary min-h-12 px-5 py-3"
           >
             Browse
             <ArrowRight size={17} />
           </Link>
           <Link
             to="/signup"
-            className="inline-flex min-h-12 items-center rounded-md border border-stone-300 bg-white px-5 py-3 text-sm font-bold text-stone-800 transition hover:bg-stone-50"
+            className="btn-secondary min-h-12 px-5 py-3"
           >
             Create account
           </Link>

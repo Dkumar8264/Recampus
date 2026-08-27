@@ -28,7 +28,7 @@ export function BrowsePage() {
         </div>
         <Link
           to="/post"
-          className="inline-flex min-h-11 items-center justify-center rounded-md bg-campus px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-[#135a72]"
+          className="btn-primary"
         >
           Post item
         </Link>

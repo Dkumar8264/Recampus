@@ -126,7 +126,7 @@ export function ListingDetailPage() {
             <button
               type="button"
               onClick={() => setIsContactOpen((current) => !current)}
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-campus px-4 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-[#135a72]"
+              className="btn-primary mt-5 min-h-12 w-full py-3"
             >
               <MessageCircle size={18} />
               Contact poster

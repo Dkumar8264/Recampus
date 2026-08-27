@@ -32,7 +32,7 @@ export function ListingCard({ listing, showStatus = false }) {
   return (
     <Link
       to={`/listings/${listing._id}`}
-      className="group block overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-campus/40 hover:shadow-md focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30"
+      className="group block overflow-hidden rounded-lg border border-stone-200 bg-white shadow-[0_8px_18px_rgba(15,23,42,0.06),inset_0_1px_0_rgba(255,255,255,0.9)] transition duration-200 hover:-translate-y-1 hover:border-campus/40 hover:shadow-[0_16px_34px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30 active:translate-y-0"
     >
       <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-stone-100 via-white to-teal-50">
         {listing.images?.[0] ? (
