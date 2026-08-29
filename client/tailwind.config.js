@@ -3,11 +3,15 @@ export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif']
+      },
       colors: {
-        ink: '#111111',
-        campus: '#0057ff',
-        leaf: '#6f3ff5',
-        amber: '#ffb000'
+        ink: '#050505',
+        campus: '#0099ff',
+        leaf: '#ff00aa',
+        amber: '#ff6b00'
       }
     }
   },

@@ -20,15 +20,15 @@ export function DiscoveryToolbar({
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.22em] text-campus">Explore Recampus</p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-ink md:text-4xl">{title}</h1>
+          <h1 className="mt-2 font-display text-4xl font-black text-white md:text-6xl">{title}</h1>
         </div>
 
-        <div className="flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-2 shadow-[0_10px_24px_rgba(15,23,42,0.08)] lg:min-w-[22rem]">
-          <Search size={18} className="shrink-0 text-stone-500" aria-hidden="true" />
+        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2 shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur lg:min-w-[22rem]">
+          <Search size={18} className="shrink-0 text-white/55" aria-hidden="true" />
           <input
             value={query}
             onChange={(event) => onSearchChange(event.target.value)}
-            className="min-h-10 w-full bg-transparent text-sm font-semibold text-ink outline-none placeholder:text-stone-400"
+            className="min-h-10 w-full bg-transparent text-sm font-semibold text-white outline-none placeholder:text-white/40"
             placeholder="Search listings..."
             type="search"
           />
@@ -36,7 +36,7 @@ export function DiscoveryToolbar({
             <button
               type="button"
               onClick={() => onSearchChange('')}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-stone-500 transition hover:bg-stone-100 hover:text-ink"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/55 transition hover:bg-white/10 hover:text-white"
               aria-label="Clear search"
             >
               <X size={16} aria-hidden="true" />
@@ -55,8 +55,8 @@ export function DiscoveryToolbar({
               aria-pressed={activeType === option.value}
               className={`min-h-10 shrink-0 rounded-full px-4 text-sm font-black transition duration-200 ${
                 activeType === option.value
-                  ? 'bg-ink text-white shadow-[0_10px_22px_rgba(15,23,42,0.18)]'
-                  : 'border border-stone-200 bg-white text-stone-700 hover:border-stone-300 hover:bg-stone-50'
+                  ? 'bg-white text-black shadow-[0_10px_22px_rgba(255,255,255,0.16)]'
+                  : 'border border-white/10 bg-white/10 text-white/70 hover:border-white/20 hover:bg-white/15 hover:text-white'
               }`}
             >
               {option.label}
@@ -64,9 +64,9 @@ export function DiscoveryToolbar({
           ))}
         </div>
 
-        <div className="flex items-center justify-between gap-3 text-sm font-bold text-stone-600 lg:justify-end">
+        <div className="flex items-center justify-between gap-3 text-sm font-bold text-white/60 lg:justify-end">
           <span>{count.toLocaleString()} result{count === 1 ? '' : 's'}</span>
-          <span className="inline-flex min-h-10 items-center gap-2 rounded-full border border-stone-200 bg-white px-4 text-stone-700">
+          <span className="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 text-white/75">
             <SlidersHorizontal size={16} aria-hidden="true" />
             Most recent
           </span>

@@ -62,9 +62,9 @@ export function BrowsePage() {
           ))}
         </div>
       ) : visibleListings.length === 0 ? (
-        <div className="mt-8 rounded-lg border border-dashed border-stone-300 bg-white p-8 text-center shadow-sm">
-          <h2 className="text-lg font-semibold text-ink">No matching listings</h2>
-          <p className="mt-2 text-sm text-stone-600">Try another search or create a fresh campus post.</p>
+        <div className="mt-8 rounded-[28px] border border-dashed border-white/15 bg-white/5 p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
+          <h2 className="text-lg font-semibold text-white">No matching listings</h2>
+          <p className="mt-2 text-sm text-white/55">Try another search or create a fresh campus post.</p>
           <Link to="/post" className="btn-primary mt-5">
             Post item
           </Link>

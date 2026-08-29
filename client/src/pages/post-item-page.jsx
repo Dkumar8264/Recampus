@@ -145,10 +145,10 @@ export function PostItemPage() {
 
   return (
     <section className="mx-auto max-w-4xl">
-      <div className="mb-6 rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="mb-6 rounded-[28px] border border-white/10 bg-[#090909]/88 p-6 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
         <p className="text-sm font-bold uppercase tracking-wide text-campus">Create listing</p>
-        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">{selectedTypeLabel}</h1>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-stone-700 sm:text-base">
+        <h1 className="mt-2 text-4xl font-black text-white">{selectedTypeLabel}</h1>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-white/60 sm:text-base">
           Share enough detail for students to identify the item and arrange a safe campus handoff.
         </p>
         {hasRouteType ? (
@@ -158,10 +158,10 @@ export function PostItemPage() {
         ) : null}
       </div>
 
-      <form className="grid gap-5 rounded-lg border border-stone-200 bg-white p-5 shadow-sm" onSubmit={handleSubmit}>
+      <form className="grid gap-5 rounded-[28px] border border-white/10 bg-[#090909]/88 p-6 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35)]" onSubmit={handleSubmit}>
         {!hasRouteType ? (
           <fieldset>
-            <legend className="text-sm font-semibold text-stone-800">Listing type</legend>
+            <legend className="text-sm font-semibold text-white/80">Listing type</legend>
             <div className="mt-3 grid gap-2 sm:grid-cols-3">
               {postTypes.map((type) => {
                 const Icon = type.icon;
@@ -172,8 +172,8 @@ export function PostItemPage() {
                     key={type.value}
                     className={`flex min-h-20 cursor-pointer items-start gap-3 rounded-md border p-3 text-sm transition ${
                       isSelected
-                        ? 'border-campus bg-blue-50 text-campus ring-2 ring-campus/15'
-                        : 'border-stone-300 text-stone-800 hover:bg-stone-50'
+                        ? 'border-campus bg-campus/15 text-white ring-2 ring-campus/20'
+                        : 'border-white/10 bg-white/5 text-white/75 hover:bg-white/10'
                     }`}
                   >
                     <input
@@ -184,12 +184,12 @@ export function PostItemPage() {
                       onChange={handleChange}
                       className="sr-only"
                     />
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-white text-campus shadow-sm">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-black shadow-sm">
                       <Icon size={19} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
                       <span className="block font-bold">{type.label}</span>
-                      <span className="mt-1 block text-xs leading-5 text-stone-600">{type.helper}</span>
+                      <span className="mt-1 block text-xs leading-5 text-white/50">{type.helper}</span>
                     </span>
                     {isSelected ? <CheckCircle2 size={18} className="ml-auto shrink-0" aria-hidden="true" /> : null}
                   </label>
@@ -201,7 +201,7 @@ export function PostItemPage() {
 
         <div className="grid gap-4">
           <label className="block" htmlFor="title">
-            <span className="text-sm font-medium text-stone-800">Title</span>
+            <span className="text-sm font-medium text-white/80">Title</span>
             <input
               id="title"
               name="title"
@@ -210,13 +210,13 @@ export function PostItemPage() {
               required
               minLength={3}
               maxLength={120}
-              className="mt-2 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
+              className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/35 focus:border-campus focus:ring-2 focus:ring-campus/25"
               placeholder="Blue Casio calculator"
             />
           </label>
 
           <label className="block" htmlFor="description">
-            <span className="text-sm font-medium text-stone-800">Description</span>
+            <span className="text-sm font-medium text-white/80">Description</span>
             <textarea
               id="description"
               name="description"
@@ -226,20 +226,20 @@ export function PostItemPage() {
               minLength={10}
               maxLength={1200}
               rows={5}
-              className="mt-2 w-full resize-y rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
+              className="mt-2 w-full resize-y rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/35 focus:border-campus focus:ring-2 focus:ring-campus/25"
               placeholder="Add color, brand, where it was lost/found, and any identifying details."
             />
           </label>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block" htmlFor="category">
-              <span className="text-sm font-medium text-stone-800">Category</span>
+              <span className="text-sm font-medium text-white/80">Category</span>
               <select
                 id="category"
                 name="category"
                 value={formValues.category}
                 onChange={handleChange}
-                className="mt-2 min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
+                className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-campus focus:ring-2 focus:ring-campus/25"
               >
                 {categories.map((category) => (
                   <option key={category.value} value={category.value}>
@@ -250,13 +250,13 @@ export function PostItemPage() {
             </label>
 
             <label className="block" htmlFor="location">
-              <span className="text-sm font-medium text-stone-800">Campus location</span>
+              <span className="text-sm font-medium text-white/80">Campus location</span>
               <select
                 id="location"
                 name="location"
                 value={formValues.location}
                 onChange={handleChange}
-                className="mt-2 min-h-11 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
+                className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none focus:border-campus focus:ring-2 focus:ring-campus/25"
               >
                 {locations.map((location) => (
                   <option key={location.value} value={location.value}>
@@ -269,7 +269,7 @@ export function PostItemPage() {
 
           {formValues.type === 'sale' ? (
             <label className="block" htmlFor="price">
-              <span className="text-sm font-medium text-stone-800">Price</span>
+              <span className="text-sm font-medium text-white/80">Price</span>
               <input
                 id="price"
                 name="price"
@@ -279,14 +279,14 @@ export function PostItemPage() {
                 value={formValues.price}
                 onChange={handleChange}
                 required
-                className="mt-2 w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm outline-none focus:border-campus focus:ring-2 focus:ring-campus/20"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-white/35 focus:border-campus focus:ring-2 focus:ring-campus/25"
                 placeholder="500"
               />
             </label>
           ) : null}
 
-          <div className="rounded-lg border border-stone-200 bg-stone-50 p-4">
-            <span className="text-sm font-medium text-stone-800">Image</span>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <span className="text-sm font-medium text-white/80">Image</span>
             <input
               ref={fileInputRef}
               type="file"
@@ -306,21 +306,21 @@ export function PostItemPage() {
               onDrop={handleImageDrop}
               className={`mt-2 flex min-h-52 w-full cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed px-4 py-6 text-center transition ${
                 isDraggingImage
-                  ? 'border-campus bg-white ring-2 ring-campus/15'
-                  : 'border-stone-300 bg-white hover:border-campus'
+                  ? 'border-campus bg-white/10 ring-2 ring-campus/20'
+                  : 'border-white/15 bg-white/5 hover:border-campus'
               }`}
             >
               {formValues.imageUrl ? (
-                <span className="relative block w-full max-w-sm overflow-hidden rounded-md border border-stone-200 bg-white">
+                <span className="relative block w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-white/10">
                   <img src={formValues.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
                 </span>
               ) : (
                 <>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-md bg-blue-50 text-campus shadow-sm">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black shadow-sm">
                     <ImagePlus size={22} aria-hidden="true" />
                   </span>
-                  <span className="mt-3 block text-sm font-semibold text-ink">Drop an image here or tap to browse</span>
-                  <span className="mt-1 block text-xs leading-5 text-stone-600">
+                  <span className="mt-3 block text-sm font-semibold text-white">Drop an image here or tap to browse</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/50">
                     JPEG, PNG, or WebP. The image is compressed before posting.
                   </span>
                 </>

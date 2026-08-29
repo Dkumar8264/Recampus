@@ -43,7 +43,7 @@ export function ListingCard({ listing, showStatus = false }) {
       to={`/listings/${listing._id}`}
       className="group block focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30"
     >
-      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[18px] bg-gradient-to-br from-stone-100 via-white to-blue-50 shadow-[0_12px_28px_rgba(15,23,42,0.08)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_42px_rgba(15,23,42,0.16)] group-active:translate-y-0">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br from-[#111111] via-[#171717] to-[#222222] shadow-[0_16px_42px_rgba(0,0,0,0.42)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(0,0,0,0.58)] group-active:translate-y-0">
         {listing.images?.[0] ? (
           <img
             src={listing.images[0]}
@@ -53,7 +53,7 @@ export function ListingCard({ listing, showStatus = false }) {
           />
         ) : (
           <div className="flex flex-col items-center gap-3 text-stone-500">
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-campus shadow-sm">
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-black shadow-sm">
               <TypeIcon size={28} aria-hidden="true" />
             </span>
             <span className="text-sm font-black">{formatLabel(listing.category)}</span>
@@ -66,7 +66,7 @@ export function ListingCard({ listing, showStatus = false }) {
           <TypeIcon size={14} aria-hidden="true" />
           {type.label}
         </span>
-        <span className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_8px_18px_rgba(15,23,42,0.16)] transition group-hover:scale-105">
+        <span className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-black shadow-[0_8px_18px_rgba(15,23,42,0.16)] transition group-hover:scale-105">
           <Bookmark size={16} aria-hidden="true" />
         </span>
         {listing.type === 'sale' ? (
@@ -76,26 +76,26 @@ export function ListingCard({ listing, showStatus = false }) {
         ) : null}
       </div>
 
-      <div className="px-1 pb-1 pt-3">
+      <div className="px-1 pb-1 pt-3 text-white">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="line-clamp-1 text-base font-black leading-snug text-ink">{listing.title}</h2>
-            <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs font-bold text-stone-500">
+            <h2 className="line-clamp-1 text-base font-black leading-snug text-white">{listing.title}</h2>
+            <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs font-bold text-white/45">
               <MapPin size={13} className="shrink-0" aria-hidden="true" />
               <span className="truncate">{formatLabel(listing.location)}</span>
             </div>
           </div>
           {showStatus ? (
-            <span className="shrink-0 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-black text-campus">
+            <span className="shrink-0 rounded-full bg-white/10 px-2.5 py-1 text-xs font-black text-white">
               {formatLabel(listing.status)}
             </span>
           ) : null}
         </div>
 
-        <p className="mt-2 line-clamp-2 min-h-11 text-sm leading-5 text-stone-600">{listing.description}</p>
+        <p className="mt-2 line-clamp-2 min-h-11 text-sm leading-5 text-white/55">{listing.description}</p>
 
-        <div className="mt-3 flex items-center justify-between gap-3 text-xs font-bold text-stone-500">
-          <span className="inline-flex min-w-0 items-center gap-1.5 rounded-full bg-stone-100 px-2.5 py-1">
+        <div className="mt-3 flex items-center justify-between gap-3 text-xs font-bold text-white/45">
+          <span className="inline-flex min-w-0 items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1">
             <UserRound size={13} className="shrink-0" aria-hidden="true" />
             <span className="truncate">{listing.postedBy?.name ?? 'Student'}</span>
           </span>
