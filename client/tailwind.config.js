@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        sans: ['"Libre Baskerville"', 'Georgia', '"Times New Roman"', 'serif'],
+        display: ['"Libre Baskerville"', 'Georgia', '"Times New Roman"', 'serif']
       },
       colors: {
         ink: '#050505',
