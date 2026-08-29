@@ -59,15 +59,24 @@ npm run dev --prefix server
 npm run dev --prefix client
 ```
 
-Default URLs:
+Default local URLs:
 
-- Client: `http://localhost:5173`
+- Client: `http://localhost:5175`
 - Server: `http://localhost:5000`
 - Health check: `http://localhost:5000/health`
 
 ## Database
 
 Recampus uses MongoDB through Mongoose. Set `MONGO_URI` in `server/.env` to either a local MongoDB instance or a MongoDB Atlas cluster.
+
+For MongoDB Atlas:
+
+1. Create a free M0 cluster in MongoDB Atlas.
+2. Create a database user with read/write access.
+3. Add your backend host IP to Network Access. During early testing, Atlas can allow `0.0.0.0/0`, but lock this down before a real launch.
+4. Copy the connection string and set it as `MONGO_URI`.
+5. Use a database name in the URI, for example `mongodb+srv://USER:PASSWORD@cluster.mongodb.net/recampus?retryWrites=true&w=majority`.
+6. In production, set `MONGO_AUTO_INDEX=false` and run the index sync command manually after deployments.
 
 Current collections:
 
@@ -89,6 +98,26 @@ The seed creates a verified demo account:
 - Email: `demo@<ALLOWED_EMAIL_DOMAIN>`
 - Password: `password123`
 
+Sync production indexes without seeding demo data:
+
+```bash
+npm run db:sync-indexes --prefix server
+```
+
+The API health check returns database status:
+
+```json
+{
+  "status": "ok",
+  "service": "recampus-api",
+  "database": {
+    "status": "connected",
+    "database": "recampus",
+    "host": "cluster.mongodb.net"
+  }
+}
+```
+
 ## Environment Variables
 
 See [server/.env.example](server/.env.example).
@@ -97,6 +126,9 @@ Important values:
 
 - `ALLOWED_ORIGINS`: comma-separated frontend origins that may call the API.
 - `ALLOWED_EMAIL_DOMAIN`: college email domain required for signup.
+- `MONGO_URI`: MongoDB local or Atlas connection string.
+- `MONGO_AUTO_INDEX`: keep `true` locally; use `false` in production and run `db:sync-indexes`.
+- `MONGO_SERVER_SELECTION_TIMEOUT_MS`, `MONGO_MAX_POOL_SIZE`: production Mongo connection tuning.
 - `GOOGLE_CLIENT_ID`, `VITE_GOOGLE_CLIENT_ID`: Google OAuth Web Client ID for verified Google login.
 - `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`: enable OTP email delivery. If omitted in development, OTPs are logged to the server console.
 - `MAX_IMAGE_SIZE_MB`, `ALLOWED_IMAGE_MIME_TYPES`: server-side image upload policy.
@@ -118,6 +150,22 @@ Important values:
 - `POST /api/uploads/validate-image`
 - `GET /health`
 
+## Production Backend Checklist
+
+Before connecting the deployed frontend to the deployed API:
+
+- Set `NODE_ENV=production`.
+- Set `PORT` from the hosting provider.
+- Set `CLIENT_URL` to the deployed frontend URL.
+- Set `ALLOWED_ORIGINS` to every allowed frontend origin, separated by commas.
+- Set `MONGO_URI` to the MongoDB Atlas connection string.
+- Set `MONGO_AUTO_INDEX=false`.
+- Set long random values for `JWT_ACCESS_SECRET` and `JWT_REFRESH_SECRET`.
+- Configure SMTP or Resend-style email credentials for OTP delivery.
+- Set `GOOGLE_CLIENT_ID` after creating a Google OAuth Web client.
+- Run `npm run db:sync-indexes --prefix server` once after the backend can connect to Atlas.
+- Confirm `/health` returns `status: "ok"` and `database.status: "connected"`.
+
 ## Next Phase
 
-Phase 2 should add listing models, Cloudinary signed upload signatures, listing CRUD, filtering/search, and the browse/post/detail flows. The client already includes `compressListingImage` for shrinking phone photos before upload, and the server has upload policy validation ready for the signature flow.
+Next we should finish Cloudinary upload signatures, owner edit/delete controls, richer listing filters, and the chat/notification flow.

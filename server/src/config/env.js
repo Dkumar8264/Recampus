@@ -19,6 +19,11 @@ export const env = {
     .map((origin) => origin.trim())
     .filter(Boolean),
   mongoUri: process.env.MONGO_URI,
+  mongoAutoIndex: process.env.MONGO_AUTO_INDEX
+    ? process.env.MONGO_AUTO_INDEX === 'true'
+    : (process.env.NODE_ENV ?? 'development') !== 'production',
+  mongoServerSelectionTimeoutMs: Number(process.env.MONGO_SERVER_SELECTION_TIMEOUT_MS ?? 10000),
+  mongoMaxPoolSize: Number(process.env.MONGO_MAX_POOL_SIZE ?? 10),
   allowedEmailDomain: process.env.ALLOWED_EMAIL_DOMAIN ?? 'bmsit.in',
   jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,

@@ -4,6 +4,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { env } from './config/env.js';
+import { getDatabaseStatus } from './config/db.js';
 import authRoutes from './routes/auth-routes.js';
 import listingRoutes from './routes/listing-routes.js';
 import uploadRoutes from './routes/upload-routes.js';
@@ -39,7 +40,16 @@ app.use(
 );
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'recampus-api' });
+  const database = getDatabaseStatus();
+  const isHealthy = database.status === 'connected';
+
+  res.status(isHealthy ? 200 : 503).json({
+    status: isHealthy ? 'ok' : 'degraded',
+    service: 'recampus-api',
+    environment: env.nodeEnv,
+    uptime: Math.round(process.uptime()),
+    database
+  });
 });
 
 app.use('/api', (_req, res, next) => {
