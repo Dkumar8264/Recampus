@@ -5,7 +5,7 @@ const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export function GoogleSignInButton({ onCredential, onError, label = 'signin_with', isDisabled = false }) {
   if (!googleClientId) {
     return (
-      <div className="rounded-2xl border border-dashed border-white/15 bg-white/5 px-3 py-3 text-center text-xs leading-5 text-white/50">
+      <div className="rounded-2xl border border-dashed border-stone-200 bg-white/80 px-3 py-3 text-center text-xs leading-5 text-stone-500">
         Add `VITE_GOOGLE_CLIENT_ID` to enable Google login.
       </div>
     );

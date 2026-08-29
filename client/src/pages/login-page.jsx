@@ -64,10 +64,10 @@ export function LoginPage() {
         />
       </div>
 
-      <div className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-white/35">
-        <span className="h-px flex-1 bg-white/10" />
+      <div className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-stone-400">
+        <span className="h-px flex-1 bg-white/90" />
         <span>Email login</span>
-        <span className="h-px flex-1 bg-white/10" />
+        <span className="h-px flex-1 bg-white/90" />
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ export function LoginPage() {
           {isSubmitting ? 'Logging in...' : 'Log in'}
         </button>
       </form>
-      <p className="mt-5 text-sm text-white/55">
+      <p className="mt-5 text-sm text-stone-600">
         New here?{' '}
         <Link to="/signup" className="font-semibold text-campus">
           Create an account

@@ -43,7 +43,7 @@ export function ListingCard({ listing, showStatus = false }) {
       to={`/listings/${listing._id}`}
       className="group block focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-campus/30"
     >
-      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-gradient-to-br from-[#111111] via-[#171717] to-[#222222] shadow-[0_16px_42px_rgba(0,0,0,0.42)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(0,0,0,0.58)] group-active:translate-y-0">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[24px] border border-stone-200 bg-gradient-to-br from-white via-[#f7f1e8] to-[#e9f5ff] shadow-[0_16px_42px_rgba(64,43,20,0.12)] transition duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_rgba(64,43,20,0.16)] group-active:translate-y-0">
         {listing.images?.[0] ? (
           <img
             src={listing.images[0]}
@@ -59,7 +59,7 @@ export function ListingCard({ listing, showStatus = false }) {
             <span className="text-sm font-black">{formatLabel(listing.category)}</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-transparent to-black/42 opacity-80 transition group-hover:opacity-95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/20 opacity-75 transition group-hover:opacity-90" />
         <span
           className={`absolute left-3 top-3 inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black ring-1 backdrop-blur ${type.className}`}
         >
@@ -76,26 +76,26 @@ export function ListingCard({ listing, showStatus = false }) {
         ) : null}
       </div>
 
-      <div className="px-1 pb-1 pt-3 text-white">
+      <div className="px-1 pb-1 pt-3 text-ink">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h2 className="line-clamp-1 text-base font-black leading-snug text-white">{listing.title}</h2>
-            <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs font-bold text-white/45">
+            <h2 className="line-clamp-1 text-base font-black leading-snug text-ink">{listing.title}</h2>
+            <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs font-bold text-stone-500">
               <MapPin size={13} className="shrink-0" aria-hidden="true" />
               <span className="truncate">{formatLabel(listing.location)}</span>
             </div>
           </div>
           {showStatus ? (
-            <span className="shrink-0 rounded-full bg-white/10 px-2.5 py-1 text-xs font-black text-white">
+            <span className="shrink-0 rounded-full border border-stone-200 bg-white px-2.5 py-1 text-xs font-black text-ink">
               {formatLabel(listing.status)}
             </span>
           ) : null}
         </div>
 
-        <p className="mt-2 line-clamp-2 min-h-11 text-sm leading-5 text-white/55">{listing.description}</p>
+        <p className="mt-2 line-clamp-2 min-h-11 text-sm leading-5 text-stone-600">{listing.description}</p>
 
-        <div className="mt-3 flex items-center justify-between gap-3 text-xs font-bold text-white/45">
-          <span className="inline-flex min-w-0 items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1">
+        <div className="mt-3 flex items-center justify-between gap-3 text-xs font-bold text-stone-500">
+          <span className="inline-flex min-w-0 items-center gap-1.5 rounded-full border border-stone-200 bg-white px-2.5 py-1">
             <UserRound size={13} className="shrink-0" aria-hidden="true" />
             <span className="truncate">{listing.postedBy?.name ?? 'Student'}</span>
           </span>

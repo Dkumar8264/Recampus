@@ -68,16 +68,16 @@ export function AppLayout() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/75 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/85 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-xl font-extrabold text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black">
+          <Link to="/" className="inline-flex min-h-11 items-center gap-2 text-xl font-extrabold text-ink">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-campus text-white shadow-[0_8px_18px_rgba(0,153,255,0.22)]">
               <Home size={18} aria-hidden="true" />
             </span>
             <span>Recampus</span>
           </Link>
 
-          <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/10 p-1 backdrop-blur md:flex">
+          <div className="hidden items-center gap-1 rounded-full border border-stone-200 bg-white/90 p-1 backdrop-blur md:flex">
             {navLinks.map((link) => {
               const Icon = link.icon;
 
@@ -87,7 +87,7 @@ export function AppLayout() {
                   to={link.to}
                   className={({ isActive }) =>
                     `nav-pill rounded-full px-4 ${
-                      isActive ? 'bg-white text-black shadow-sm' : 'text-white/65 hover:bg-white/10 hover:text-white'
+                      isActive ? 'bg-ink text-white shadow-sm' : 'text-stone-600 hover:bg-white hover:text-ink'
                     }`
                   }
                 >
@@ -174,7 +174,7 @@ export function AppLayout() {
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-white/10 bg-black/90 px-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-8px_24px_rgba(0,0,0,0.5)] backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-stone-200 bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] pt-2 shadow-[0_-8px_24px_rgba(64,43,20,0.12)] backdrop-blur md:hidden">
         <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
           {navLinks.map((link) => {
             const Icon = link.icon;
@@ -185,7 +185,7 @@ export function AppLayout() {
                 to={link.to}
                 className={({ isActive }) =>
                   `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-2 text-[11px] font-bold transition duration-200 active:scale-[0.98] ${
-                    isActive ? 'bg-white text-black' : 'text-white/65 hover:bg-white/10 hover:text-white'
+                    isActive ? 'bg-ink text-white' : 'text-stone-600 hover:bg-white hover:text-ink'
                   }`
                 }
               >
@@ -204,7 +204,7 @@ export function AppLayout() {
         </div>
       </nav>
 
-      <footer className="mx-auto hidden max-w-[1500px] flex-col gap-3 border-t border-white/10 px-4 py-8 text-sm text-white/55 md:flex md:flex-row md:items-center md:justify-between">
+      <footer className="mx-auto hidden max-w-[1500px] flex-col gap-3 border-t border-stone-200 px-4 py-8 text-sm text-stone-600 md:flex md:flex-row md:items-center md:justify-between">
         <p>Verified college accounts, safer campus exchanges.</p>
         <Link to="/terms" className="font-semibold text-campus hover:text-[#0047d6]">
           Terms & community guidelines

@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  color: #ffffff;
-  background: #000000;
+  color: #15110d;
+  background: #fbfaf7;
   font-family:
     "Libre Baskerville", Georgia, "Times New Roman", serif;
 }
@@ -20,10 +20,9 @@ body {
   min-width: 320px;
   margin: 0;
   background:
-    radial-gradient(circle at 18% 4%, rgba(0, 153, 255, 0.28), transparent 28rem),
-    radial-gradient(circle at 88% 16%, rgba(255, 0, 170, 0.2), transparent 25rem),
-    radial-gradient(circle at 45% 95%, rgba(255, 107, 0, 0.16), transparent 30rem),
-    #000000;
+    radial-gradient(circle at 14% 2%, rgba(0, 153, 255, 0.12), transparent 28rem),
+    radial-gradient(circle at 88% 10%, rgba(255, 0, 170, 0.08), transparent 25rem),
+    linear-gradient(180deg, #ffffff 0%, #fbfaf7 42%, #f4efe7 100%);
 }
 
 button,
@@ -62,7 +61,7 @@ a {
 
 @layer components {
   .gallery-shell {
-    @apply rounded-[32px] border border-white/10 bg-[#090909]/85 p-5 text-white shadow-[0_24px_70px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur md:p-6;
+    @apply rounded-[32px] border border-stone-200 bg-white/90 p-5 text-ink shadow-[0_24px_70px_rgba(64,43,20,0.12),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur md:p-6;
   }
 
   .gallery-grid {
@@ -113,11 +112,11 @@ a {
   }
 
   .btn-secondary {
-    @apply btn border border-white/15 bg-white text-black shadow-[0_7px_16px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.9)];
+    @apply btn border border-stone-200 bg-white text-ink shadow-[0_7px_16px_rgba(64,43,20,0.08),inset_0_1px_0_rgba(255,255,255,0.95)];
   }
 
   .btn-secondary:hover {
-    @apply border-white/30 bg-stone-100 shadow-[0_10px_20px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95)];
+    @apply border-stone-300 bg-stone-50 shadow-[0_10px_20px_rgba(64,43,20,0.1),inset_0_1px_0_rgba(255,255,255,0.95)];
   }
 
   .btn-secondary:active {
@@ -125,8 +124,8 @@ a {
   }
 
   .btn-icon {
-    @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white transition duration-200 ease-out;
-    @apply shadow-[0_6px_14px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur;
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white/90 text-ink transition duration-200 ease-out;
+    @apply shadow-[0_6px_14px_rgba(64,43,20,0.08),inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur;
   }
 
   .btn-icon:focus-visible {
@@ -135,7 +134,7 @@ a {
   }
 
   .btn-icon:hover {
-    @apply border-white/20 bg-white/15 text-white shadow-[0_10px_20px_rgba(0,0,0,0.25)];
+    @apply border-stone-300 bg-white text-ink shadow-[0_10px_20px_rgba(64,43,20,0.12)];
     transform: translateY(-1px);
   }
 

@@ -11,14 +11,14 @@ export function HomePage() {
   return (
     <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
       <div className="py-8 md:py-16">
-        <p className="inline-flex min-h-9 items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 text-sm font-bold uppercase tracking-wide text-white/75 backdrop-blur">
+        <p className="inline-flex min-h-9 items-center gap-2 rounded-full border border-stone-200 bg-white/90 px-4 text-sm font-bold uppercase tracking-wide text-stone-700 backdrop-blur">
           <BadgeCheck size={16} aria-hidden="true" />
           Verified campus board
         </p>
-        <h1 className="mt-6 max-w-4xl font-display text-6xl font-black leading-[0.9] text-white md:text-8xl">
+        <h1 className="mt-6 max-w-4xl font-display text-6xl font-black leading-[0.9] text-ink md:text-8xl">
           Your campus, redesigned.
         </h1>
-        <p className="mt-6 max-w-xl text-base font-semibold leading-7 text-white/62 md:text-xl">
+        <p className="mt-6 max-w-xl text-base font-semibold leading-7 text-stone-600 md:text-xl">
           Recampus helps students recover lost items, return found items, and sell useful stuff inside a verified
           college community.
         </p>
@@ -40,15 +40,15 @@ export function HomePage() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div className="relative min-h-[24rem] overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-[#00d2ff] via-[#ff00aa] to-[#ff6b00] p-6 text-white shadow-[0_28px_80px_rgba(0,0,0,0.5)] sm:col-span-2">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.42),transparent_18rem),radial-gradient(circle_at_80%_70%,rgba(124,58,237,0.55),transparent_20rem)]" />
+        <div className="relative min-h-[24rem] overflow-hidden rounded-[40px] border border-stone-200 bg-gradient-to-br from-white via-[#e9f5ff] to-[#ffeaf8] p-6 text-ink shadow-[0_28px_80px_rgba(64,43,20,0.14)] sm:col-span-2">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,153,255,0.2),transparent_18rem),radial-gradient(circle_at_80%_70%,rgba(255,107,0,0.14),transparent_20rem)]" />
           <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-white/20 blur-sm" />
-          <div className="absolute -bottom-16 left-12 h-52 w-52 rounded-full bg-black/25 blur-sm" />
-          <p className="relative text-xs font-black uppercase tracking-[0.22em] text-white/75">Featured campus flow</p>
+          <div className="absolute -bottom-16 left-12 h-52 w-52 rounded-full bg-campus/10 blur-sm" />
+          <p className="relative text-xs font-black uppercase tracking-[0.22em] text-campus">Featured campus flow</p>
           <h2 className="relative mt-5 max-w-lg font-display text-4xl font-black leading-[0.95] md:text-6xl">
             Find it, list it, return it, sell it.
           </h2>
-          <p className="relative mt-4 max-w-md text-sm font-semibold leading-6 text-white/80">
+          <p className="relative mt-4 max-w-md text-sm font-semibold leading-6 text-stone-600">
             A visual campus board designed for quick scanning and safer student handoffs.
           </p>
         </div>
@@ -57,15 +57,15 @@ export function HomePage() {
             const Icon = item.icon;
 
             return (
-              <div key={item.title} className="rounded-[24px] border border-white/10 bg-white/10 p-4 text-white shadow-[0_16px_42px_rgba(0,0,0,0.28)] backdrop-blur">
+              <div key={item.title} className="rounded-[24px] border border-stone-200 bg-white/90 p-4 text-ink shadow-[0_16px_42px_rgba(64,43,20,0.1)] backdrop-blur">
                 <div className="flex items-start gap-3">
                   <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md ${item.className}`}>
                     <Icon size={19} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <span className="text-xs font-bold uppercase tracking-wide text-white/45">{item.label}</span>
-                    <h2 className="mt-1 font-bold text-white">{item.title}</h2>
-                    <p className="mt-1 text-sm leading-6 text-white/55">Open a detail page, review photos, and contact the poster.</p>
+                    <span className="text-xs font-bold uppercase tracking-wide text-stone-500">{item.label}</span>
+                    <h2 className="mt-1 font-bold text-ink">{item.title}</h2>
+                    <p className="mt-1 text-sm leading-6 text-stone-600">Open a detail page, review photos, and contact the poster.</p>
                   </div>
                 </div>
               </div>
